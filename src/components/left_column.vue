@@ -4,7 +4,11 @@
     <img alt="podocal logo" id="podocal_logo" src="../assets/podocal.png">
     {{ msg }}
     </h1>
-    <h2>fugyofugyo</h2>
+    <select>
+      <option value="day">日</option>
+      <option value="week">週</option>
+      <option value="month">月</option>
+    </select>
   </div>
 </template>
 
@@ -28,6 +32,14 @@ export default {
 #podocal_logo {
   height:50px;
   vertical-align: middle;
+}
+
+select {
+  font-size:1.1em;
+  padding: 0.5em;
+  line-height: 1.5em;
+  cursor: pointer;
+  outline: none;
 }
 
 h1 {
