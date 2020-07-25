@@ -1,5 +1,7 @@
 <template>
-    
+    <div id ="right-main">
+        hogehoge
+    </div>
 </template>
 
 <script>
@@ -9,5 +11,9 @@
 </script>
 
 <style scoped>
-
+#right-main {
+    flex: 1;
+    min-height:100vh;
+    background-color: coral;
+}
 </style>

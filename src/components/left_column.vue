@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div id="left-main">
     <h1>{{ msg }}</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
@@ -54,5 +54,11 @@ li {
 }
 a {
   color: #42b983;
+}
+
+#left-main {
+  width: 250px;
+  min-height: 100vh;
+  background-color: #42b983;
 }
 </style>
