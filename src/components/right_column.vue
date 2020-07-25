@@ -14,6 +14,6 @@
 #right-main {
     flex: 1;
     min-height:100vh;
-    background-color: coral;
+    background-color: oldlace;
 }
 </style>

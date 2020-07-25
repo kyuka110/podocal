@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <left_column msg="Welcome to Your Vue.js App"/>
+    <left_column msg="podocal"/>
     <right_column/>
   </div>
 </template>
@@ -8,7 +8,6 @@
 <script>
 import left_column from './components/left_column.vue'
 import right_column from './components/right_column.vue'
-
 export default {
   name: 'App',
   components: {
@@ -23,7 +22,6 @@ export default {
   margin: 0;
   padding: 0;
 }
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -31,5 +29,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   display: flex;
+  background-color: oldlace;
 }
 </style>
