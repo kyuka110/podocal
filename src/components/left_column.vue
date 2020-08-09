@@ -9,6 +9,8 @@
       <option value="week">週</option>
       <option value="month">月</option>
     </select>
+    <span class="page_change">＜</span>
+    <span class="page_change">＞</span>
   </div>
 </template>
 
@@ -36,10 +38,15 @@ export default {
 
 select {
   font-size:1.1em;
+  margin: 1em;
   padding: 0.5em;
   line-height: 1.5em;
   cursor: pointer;
   outline: none;
+}
+
+.page_change {
+  margin: 0.5em;
 }
 
 h1 {
