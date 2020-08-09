@@ -1,6 +1,6 @@
 <template>
   <div id ="cal_week">
-    <!-- 1行目 曜日-->
+    <!-- 1行目 曜日 -->
     <span class="days_of_week">日</span>
     <span class="days_of_week">月</span>
     <span class="days_of_week">火</span>
@@ -8,7 +8,7 @@
     <span class="days_of_week">木</span>
     <span class="days_of_week">金</span>
     <span class="days_of_week">日</span>
-    <!-- 2行目 日付-->
+    <!-- 2行目 日付 -->
     <span class="days">9</span>
     <span class="days">10</span>
     <span class="days">11</span>
@@ -16,7 +16,7 @@
     <span class="days">13</span>
     <span class="days">14</span>
     <span class="days">15</span>
-    <!-- 3行目 終日予定-->
+    <!-- 3行目 終日予定 -->
     <p class="all_day">
       <span> よてい<br>aaaaaaaa</span>
     </p>
@@ -38,6 +38,7 @@
     <p class="all_day">
 
     </p>
+    <!-- 4行目 時間軸 -->
     <div id="timeline">
       aaaaaaaaaaa
     </div>
@@ -82,10 +83,6 @@ span {
 
 #timeline {
   width: 100%;
-  min-height: 75%;
-  max-height: 75%;
-
   border: solid 1px #2c3e50;
-
 }
 </style>
