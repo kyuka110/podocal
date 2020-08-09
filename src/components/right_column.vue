@@ -1,17 +1,19 @@
 <template>
-    <div id ="right-main">
-        hogehoge
+    <div id ="right_main">
+      <cal_week/>
     </div>
 </template>
 
 <script>
-    export default {
-        name: "right_column"
-    }
+import cal_week from './cal_week.vue'
+export default {
+  name: 'right_column',
+  components: {cal_week}
+}
 </script>
 
 <style scoped>
-#right-main {
+#right_main {
     flex: 1;
     min-height:100vh;
     background-color: oldlace;

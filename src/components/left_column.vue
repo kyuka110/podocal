@@ -1,5 +1,5 @@
 <template>
-  <div id="left-main">
+  <div id="left_main">
     <h1>
     <img alt="podocal logo" id="podocal_logo" src="../assets/podocal.png">
     {{ msg }}
@@ -25,7 +25,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#left-main {
+#left_main {
   width: 250px;
   min-height: 100vh;
   background-color: mintcream;
