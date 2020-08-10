@@ -1,27 +1,32 @@
 <template>
-  <div id ="day_week_box_top">
+  <div id ="each_day_box">
     <!-- 1行目 曜日 -->
     <span class="days_of_week">日</span>
     <!-- 2行目 日付 -->
-    <span class="days">9</span>
+    <span class="days">{{first_day}}</span>
     <!-- 3行目 終日予定 -->
     <p class="all_day">
-      <span> よてい<br>aaaaaaaa</span>
+      <span> {{day_or_week}}</span>
     </p>
   </div>
 </template>
 
 <script>
 export default {
-  name: "day_week_top"
+  name: 'day_week_top',
+  props: {
+    day_or_week: Number,
+    first_day: Number
+  }
 }
+
 </script>
 
 <style scoped>
-#day_week_box_top {
-  margin: 1em 1em 0;
-  display: flex;
-  flex-wrap: wrap;
+#each_day_box {
+  /*margin: 1em 1em 0;*/
+  /*display: flex;*/
+  /*flex-wrap: wrap;*/
 }
 
 p {
