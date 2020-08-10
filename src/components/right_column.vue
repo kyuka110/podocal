@@ -1,9 +1,9 @@
 <template>
     <div id ="right_main">
-      <div id ="day_week_box_top_top">
-        <day_week_top :day_or_week="day_or_week" :first_day="first_day"/>
+      <div id ="day_week_box_top">
+        <day_week_top v-for="i in day_or_week" :key="first_day + i" :day="first_day + i"></day_week_top>
       </div>
-      <day_week_bottom/>
+        <day_week_bottom/>
     </div>
 </template>
 
@@ -18,7 +18,7 @@ export default {
   },
   data () {
     return {
-      day_or_week: 1,
+      day_or_week: 7,
       first_day: 10
     }
   }
@@ -32,9 +32,9 @@ export default {
     background-color: oldlace;
 }
 
-#day_week_box_top_top {
+#day_week_box_top {
   margin: 1em 1em 0;
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
 }
 </style>
