@@ -1,14 +1,16 @@
 <template>
     <div id ="right_main">
-      <cal_week/>
+      <day_week_top/>
     </div>
 </template>
 
 <script>
-import cal_week from './cal_week.vue'
+import day_week_top from './day_week_top.vue'
 export default {
   name: 'right_column',
-  components: {cal_week}
+  components: {
+    day_week_top
+  }
 }
 </script>
 
