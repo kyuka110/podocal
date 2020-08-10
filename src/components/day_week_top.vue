@@ -19,7 +19,7 @@ export default {
 
 <style scoped>
 #day_week_box_top {
-  margin: 1em;
+  margin: 1em 1em 0;
   display: flex;
   flex-wrap: wrap;
 }
