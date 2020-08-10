@@ -25,12 +25,12 @@ export default {
 }
 
 p {
-  width: 14.28%; /* 親要素に対して7等分する */
+  width: 100%;
   min-height: 8vh;
 }
 
 span {
-  width: 14.28%; /* 親要素に対して7等分する */
+  width: 100%;
   margin: 0.5% 0;
 }
 
@@ -45,10 +45,5 @@ span {
 .all_day {
   height: 3em;
   background-color: aquamarine;
-}
-
-#timeline {
-  width: 100%;
-  border: solid 1px #2c3e50;
 }
 </style>
