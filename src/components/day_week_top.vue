@@ -1,5 +1,5 @@
 <template>
-  <div id ="each_day_box" :style="cssProps">
+  <div id ="each_day_box_top" :style="cssProps">
     <!-- 1行目 曜日 -->
     <span class="days_of_week">日</span>
     <!-- 2行目 日付 -->
@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style scoped>
-#each_day_box {
+#each_day_box_top {
   --content-width: 100%;
   width: var(--content-width);
   display: flex;
