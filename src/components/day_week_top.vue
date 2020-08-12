@@ -6,7 +6,7 @@
     <span class="days">{{day}}</span>
     <!-- 3行目 終日予定 -->
     <p class="all_day">
-      <span> {{day_or_week}}</span>
+      <span> {{first_day_2.getDate()}}</span>
     </p>
   </div>
 </template>
@@ -16,7 +16,8 @@ export default {
   name: 'day_week_top',
   props: {
     day_or_week: Number,
-    day: Number
+    day: Number,
+    first_day_2: Date
   },
   computed: {
     cssProps() {

@@ -1,7 +1,7 @@
 <template>
     <div id ="right_main">
       <div id ="day_week_box_top">
-        <day_week_top v-for="i in day_or_week" :key="first_day + i" :day_or_week="day_or_week" :day="first_day + i"></day_week_top>
+        <day_week_top v-for="i in day_or_week" :key="first_day + i" :day_or_week="day_or_week" :first_day_2="first_day_2.getDate()" :day="first_day + i"></day_week_top>
       </div>
       <div id ="day_week_box_bottom">
         <day_week_bottom v-for="i in day_or_week" :key="first_day + i" :day_or_week="day_or_week"></day_week_bottom>
@@ -19,9 +19,16 @@ export default {
     day_week_bottom
   },
   data () {
+    var today = new Date();
     return {
       day_or_week: 7,
-      first_day: 10
+      first_day: 10,
+      first_day_2: today
+    }
+  },
+  computed: {
+    calDate() {
+
     }
   }
 }
