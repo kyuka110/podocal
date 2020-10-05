@@ -1,7 +1,7 @@
 <template>
     <div id ="right_main">
       <div id ="day_week_box_top">
-        <day_week_top v-for="i in day_or_week" :key="first_day + i" :day="setDay(i)" :day_of_the_week="setDayOfTheWeek(i)"></day_week_top>
+        <day_week_top v-for="i in day_or_week" :key="first_day + i" :day_or_week="day_or_week" :day="setDay(i)" :day_of_the_week="setDayOfTheWeek(i)"></day_week_top>
       </div>
       <div id ="day_week_box_bottom">
         <day_week_bottom v-for="i in day_or_week" :key="first_day + i" :day_or_week="day_or_week"></day_week_bottom>
