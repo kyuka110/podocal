@@ -1,7 +1,7 @@
 <template>
     <div id ="right_main">
       <div id ="day_week_box_top">
-        <day_week_top v-for="i in day_or_week" :key="first_day + i" :day_or_week="day_or_week" :first_day_2="first_day_2.getDate()" :day="first_day + i"></day_week_top>
+        <day_week_top v-for="i in day_or_week" :key="first_day + i" :day="setDay(i)" :day_of_the_week="setDayOfTheWeek(i)"></day_week_top>
       </div>
       <div id ="day_week_box_bottom">
         <day_week_bottom v-for="i in day_or_week" :key="first_day + i" :day_or_week="day_or_week"></day_week_bottom>
@@ -19,17 +19,46 @@ export default {
     day_week_bottom
   },
   data () {
-    var today = new Date();
     return {
       day_or_week: 7,
-      first_day: 10,
-      first_day_2: today
+      first_day: 29,
     }
   },
-  computed: {
-    calDate() {
-
-    }
+  methods: {
+     setDay(i){
+         var today = new Date();
+         today.setDate(today.getDate() + i - 1);
+         return today.getDate();
+     },
+     setDayOfTheWeek(i){
+         var today = new Date();
+         today.setDate(today.getDate() + i - 1);
+         var dayStr = '日'
+         switch(today.getDay()){
+             case 0:
+                 dayStr = '日';
+                 break;
+             case 1:
+                 dayStr = '月';
+                 break;
+             case 2:
+                 dayStr = '火';
+                 break;
+             case 3:
+                 dayStr = '水';
+                 break;
+             case 4:
+                 dayStr = '木';
+                 break;
+             case 5:
+                 dayStr = '金';
+                 break;
+             case 6:
+                 dayStr = '土';
+                 break;
+         }
+         return dayStr;
+     }
   }
 }
 </script>

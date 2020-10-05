@@ -1,12 +1,12 @@
 <template>
   <div id ="each_day_box_top" :style="cssProps">
     <!-- 1行目 曜日 -->
-    <span class="days_of_week">日</span>
+    <span class="days_of_week">{{day_of_the_week}}</span>
     <!-- 2行目 日付 -->
     <span class="days">{{day}}</span>
     <!-- 3行目 終日予定 -->
     <p class="all_day">
-      <span> {{first_day_2.getDate()}}</span>
+      <span> {{day_or_week}}</span>
     </p>
   </div>
 </template>
@@ -17,7 +17,7 @@ export default {
   props: {
     day_or_week: Number,
     day: Number,
-    first_day_2: Date
+    day_of_the_week: String
   },
   computed: {
     cssProps() {
