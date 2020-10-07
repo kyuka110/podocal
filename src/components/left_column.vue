@@ -1,16 +1,22 @@
 <template>
   <div id="left_main">
     <h1>
-    <img alt="podocal logo" id="podocal_logo" src="../assets/podocal.png">
-    {{ msg }}
+      <img alt="podocal logo" id="podocal_logo" src="../assets/podocal.png">
+      {{ msg }}
     </h1>
-    <select>
-      <option value="day">日</option>
-      <option value="week">週</option>
-      <option value="month">月</option>
-    </select>
-    <span class="page_change">＜</span>
-    <span class="page_change">＞</span>
+    <p>
+      <select>
+        <option value="day">日</option>
+        <option value="week">週</option>
+        <option value="month">月</option>
+      </select>
+      <span class="page_change">＜</span>
+      <span class="page_change">＞</span>
+    </p>
+    <p>
+      <button class="scale_change">＋</button>
+      <button class="scale_change">－</button>
+    </p>
   </div>
 </template>
 
@@ -47,6 +53,16 @@ select {
 
 .page_change {
   margin: 0.5em;
+}
+
+button {
+  background-color: white;
+  border-width: 1px;
+}
+
+.scale_change {
+  font-size: 1.5em;
+  padding: 0.2em;
 }
 
 h1 {
