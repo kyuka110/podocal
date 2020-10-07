@@ -14,8 +14,9 @@
       <span class="page_change">＞</span>
     </p>
     <p>
-      <button class="scale_change">＋</button>
-      <button class="scale_change">－</button>
+      <button class="scale_change" v-on:click="plusClick">＋</button>
+      <button class="scale_change" v-on:click="minusClick">－</button>
+      {{zoom}}
     </p>
   </div>
 </template>
@@ -25,6 +26,19 @@ export default {
   name: 'left_column',
   props: {
     msg: String
+  },
+  data() {
+    return {
+      zoom: 0
+    }
+  },
+  methods: {
+    plusClick: function() {
+      this.zoom = this.zoom + 10;
+    },
+    minusClick: function() {
+      this.zoom = this.zoom - 10;
+    }
   }
 }
 </script>
