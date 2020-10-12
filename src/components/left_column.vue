@@ -16,7 +16,6 @@
     <p>
       <button class="scale_change" v-on:click="plusClick">＋</button>
       <button class="scale_change" v-on:click="minusClick">－</button>
-      {{zoom}}
     </p>
   </div>
 </template>

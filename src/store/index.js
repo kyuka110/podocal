@@ -10,10 +10,10 @@ export default new Vuex.Store({
   },
   mutations: {
     plusClick(state) {
-      state.zoom = state.zoom + 10
+      state.zoom = state.zoom + 3
     },
     minusClick(state) {
-      state.zoom = state.zoom - 10
+      state.zoom = state.zoom - 3
     }
   },
   actions: {
