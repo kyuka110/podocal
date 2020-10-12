@@ -22,22 +22,19 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
   name: 'left_column',
   props: {
     msg: String
   },
-  data() {
-    return {
-      zoom: 0
-    }
-  },
+  computed: mapState(['zoom']),
   methods: {
-    plusClick: function() {
-      this.zoom = this.zoom + 10;
+    plusClick() {
+      this.$store.commit('plusClick')
     },
-    minusClick: function() {
-      this.zoom = this.zoom - 10;
+    minusClick() {
+      this.$store.commit('minusClick')
     }
   }
 }
