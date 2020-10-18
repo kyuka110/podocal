@@ -17,20 +17,20 @@
       <button class="scale_change" v-on:click="plusClick">＋</button>
       <button class="scale_change" v-on:click="minusClick">－</button>
     </p>
-      <button @click="onclick">API叩く</button>
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex'
-var URL = 'https://jxff6ecyn2.execute-api.ap-northeast-1.amazonaws.com/prod/getsingletask'
 
 export default {
   name: 'left_column',
   props: {
     msg: String
   },
-  computed: mapState(['zoom']),
+  computed: {
+    ...mapState(['zoom'])
+  },
   methods: {
     plusClick() {
       this.$store.commit('plusClick')
@@ -38,18 +38,10 @@ export default {
     minusClick() {
       this.$store.commit('minusClick')
     },
-    onclick: function() {
-      this.$http(URL).then((response) => {
-        return response.json()
-      })
-    }
-  }
+  },
 }
-
-
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #left_main {
   width: 250px;
