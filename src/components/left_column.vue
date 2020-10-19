@@ -4,15 +4,16 @@
       <img alt="podocal logo" id="podocal_logo" src="../assets/podocal.png">
       {{ msg }}
     </h1>
-    <p>
-      <select>
-        <option value="day">日</option>
-        <option value="week">週</option>
-        <option value="month">月</option>
-      </select>
-      <span class="page_change">＜</span>
-      <span class="page_change">＞</span>
-    </p>
+<!--    あとで追加する-->
+<!--    <p>-->
+<!--      <select>-->
+<!--        <option value="day">日</option>-->
+<!--        <option value="week">週</option>-->
+<!--        <option value="month">月</option>-->
+<!--      </select>-->
+<!--      <span class="page_change">＜</span>-->
+<!--      <span class="page_change">＞</span>-->
+<!--    </p>-->
     <p>
       <button class="scale_change" v-on:click="plusClick">＋</button>
       <button class="scale_change" v-on:click="minusClick">－</button>
@@ -54,6 +55,11 @@ export default {
   vertical-align: middle;
 }
 
+h1 {
+  line-height: 2.2;
+  padding-bottom: 20px;
+}
+
 select {
   font-size:1.1em;
   margin: 1em;
@@ -63,22 +69,17 @@ select {
   outline: none;
 }
 
-.page_change {
-  margin: 0.5em;
-}
-
 button {
   background-color: white;
   border-width: 1px;
 }
 
-.scale_change {
-  font-size: 1.5em;
-  padding: 0.2em;
-}
+/*.page_change {*/
+/*  margin: 0.5em;*/
+/*}*/
 
-h1 {
-  line-height: 2.2;
-  padding-bottom: 20px;
-}
+/*.scale_change {*/
+/*  font-size: 1.5em;*/
+/*  padding: 0.2em;*/
+/*}*/
 </style>

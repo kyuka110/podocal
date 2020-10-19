@@ -36,11 +36,13 @@ export default {
        jst0.setTime(jst0.getTime() + (i - 1) * 86400000);
        return jst0.getTime();
      },
+     // 日付返却
      setDay(i){
          var today = new Date();
          today.setDate(today.getDate() + i - 1);
          return today.getDate();
      },
+      // 曜日返却
      setDayOfTheWeek(i){
          var today = new Date();
          today.setDate(today.getDate() + i - 1);

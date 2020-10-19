@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
+// import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -8,7 +8,9 @@ export default new Vuex.Store({
   strict: true,
   state: {
     zoom: 0,
-    dataSet: {}
+    dataSet: {},
+    searchBeginTime:  4765100399000,
+    searchEndTime: 0
   },
   mutations: {
     plusClick(state) {
@@ -19,21 +21,23 @@ export default new Vuex.Store({
     },
     mutateDataSet(state, payload) {
       state.dataSet = payload;
+    },
+    changeBeginTime(state, payload) {
+      if (payload.newtime < state.searchBeginTime){
+        state.searchBeginTime = payload.newtime;
+      }
+    },
+    changeEndTime(state, payload) {
+      if (payload.newtime > state.searchEndTime){
+        state.searchEndTime = payload.newtime;
+      }
     }
   },
   actions: {
-    commitDataSet(store) {
-      return axios.get('https://jxff6ecyn2.execute-api.ap-northeast-1.amazonaws.com/prod/getsingletask')
-          .then(response => {
-            store.commit('mutateDataSet', response.data)
-          })
-          .catch((reason) => {
-            console.log(reason.message)
-          })
-    }
+
   },
   getters: {
-    getStateDataSet: (state) => state.dataSet
+    getStateDataSet: (state) => state.dataSet,
   },
   modules: {
   }
