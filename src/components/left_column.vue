@@ -60,26 +60,31 @@ h1 {
   padding-bottom: 20px;
 }
 
-select {
-  font-size:1.1em;
-  margin: 1em;
-  padding: 0.5em;
-  line-height: 1.5em;
-  cursor: pointer;
-  outline: none;
-}
+/*select {*/
+/*  font-size:1.1em;*/
+/*  margin: 1em;*/
+/*  padding: 0.5em;*/
+/*  line-height: 1.5em;*/
+/*  cursor: pointer;*/
+/*  outline: none;*/
+/*}*/
 
 button {
   background-color: white;
   border-width: 1px;
 }
 
+.scale_change {
+  font-size: 1.5em;
+  padding: 0.2em;
+}
+
 /*.page_change {*/
 /*  margin: 0.5em;*/
 /*}*/
 
-/*.scale_change {*/
-/*  font-size: 1.5em;*/
-/*  padding: 0.2em;*/
-/*}*/
+.scale_change {
+  font-size: 1.5em;
+  padding: 0.2em;
+}
 </style>

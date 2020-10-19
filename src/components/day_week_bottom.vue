@@ -31,12 +31,12 @@ export default {
     ...mapState({
       cssHeightHour(state) {
         return {
-          'min-height': 8 + state.zoom + 'vh'
+          'min-height': 4 + state.zoom + 'vh'
         }
       },
       cssHeightMinutes(state) {
         return {
-          'min-height': 2 + state.zoom + 'vh'
+          'min-height': 1 + state.zoom + 'vh'
         }
       }
     }),

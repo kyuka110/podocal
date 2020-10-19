@@ -14,10 +14,12 @@ export default new Vuex.Store({
   },
   mutations: {
     plusClick(state) {
-      state.zoom = state.zoom + 3
+      state.zoom = state.zoom + 1
     },
     minusClick(state) {
-      state.zoom = state.zoom - 3
+      if (state.zoom > 0) {
+        state.zoom = state.zoom - 1
+      }
     },
     mutateDataSet(state, payload) {
       state.dataSet = payload;
