@@ -4,7 +4,7 @@
         <day_week_top v-for="i in day_or_week" :key="first_day + i" :day_or_week="day_or_week" :day="setDay(i)" :day_of_the_week="setDayOfTheWeek(i)"></day_week_top>
       </div>
       <div id ="day_week_box_bottom">
-        <day_week_bottom v-for="i in day_or_week" :key="first_day + i" :day_or_week="day_or_week"></day_week_bottom>
+        <day_week_bottom v-for="i in day_or_week" :key="first_day + i" :day_or_week="day_or_week" :time="setDate(i)"></day_week_bottom>
       </div>
     </div>
 </template>
@@ -25,11 +25,24 @@ export default {
     }
   },
   methods: {
+     // 今日の0時 + 1日、2日…と返す
+     setDate(i){
+       var today = new Date()
+       // 今日の0時のunixtime(UTC)
+       var utc0unix = Date.UTC( today.getFullYear(), today.getMonth(), today.getDate());
+       // 32400000 = 9時間。
+       var jst0unix = utc0unix + 32400000;
+       var jst0 = new Date(jst0unix);
+       jst0.setTime(jst0.getTime() + (i - 1) * 86400000);
+       return jst0.getTime();
+     },
+     // 日付返却
      setDay(i){
          var today = new Date();
          today.setDate(today.getDate() + i - 1);
          return today.getDate();
      },
+      // 曜日返却
      setDayOfTheWeek(i){
          var today = new Date();
          today.setDate(today.getDate() + i - 1);

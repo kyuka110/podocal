@@ -4,15 +4,16 @@
       <img alt="podocal logo" id="podocal_logo" src="../assets/podocal.png">
       {{ msg }}
     </h1>
-    <p>
-      <select>
-        <option value="day">日</option>
-        <option value="week">週</option>
-        <option value="month">月</option>
-      </select>
-      <span class="page_change">＜</span>
-      <span class="page_change">＞</span>
-    </p>
+<!--    あとで追加する-->
+<!--    <p>-->
+<!--      <select>-->
+<!--        <option value="day">日</option>-->
+<!--        <option value="week">週</option>-->
+<!--        <option value="month">月</option>-->
+<!--      </select>-->
+<!--      <span class="page_change">＜</span>-->
+<!--      <span class="page_change">＞</span>-->
+<!--    </p>-->
     <p>
       <button class="scale_change" v-on:click="plusClick">＋</button>
       <button class="scale_change" v-on:click="minusClick">－</button>
@@ -22,24 +23,26 @@
 
 <script>
 import {mapState} from 'vuex'
+
 export default {
   name: 'left_column',
   props: {
     msg: String
   },
-  computed: mapState(['zoom']),
+  computed: {
+    ...mapState(['zoom'])
+  },
   methods: {
     plusClick() {
       this.$store.commit('plusClick')
     },
     minusClick() {
       this.$store.commit('minusClick')
-    }
-  }
+    },
+  },
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #left_main {
   width: 250px;
@@ -52,18 +55,19 @@ export default {
   vertical-align: middle;
 }
 
-select {
-  font-size:1.1em;
-  margin: 1em;
-  padding: 0.5em;
-  line-height: 1.5em;
-  cursor: pointer;
-  outline: none;
+h1 {
+  line-height: 2.2;
+  padding-bottom: 20px;
 }
 
-.page_change {
-  margin: 0.5em;
-}
+/*select {*/
+/*  font-size:1.1em;*/
+/*  margin: 1em;*/
+/*  padding: 0.5em;*/
+/*  line-height: 1.5em;*/
+/*  cursor: pointer;*/
+/*  outline: none;*/
+/*}*/
 
 button {
   background-color: white;
@@ -75,8 +79,12 @@ button {
   padding: 0.2em;
 }
 
-h1 {
-  line-height: 2.2;
-  padding-bottom: 20px;
+/*.page_change {*/
+/*  margin: 0.5em;*/
+/*}*/
+
+.scale_change {
+  font-size: 1.5em;
+  padding: 0.2em;
 }
 </style>
