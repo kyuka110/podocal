@@ -31,7 +31,7 @@ export default {
     ...mapState({
       cssHeightHour(state) {
         return {
-          'min-height': 4 + state.zoom + 'vh'
+          'min-height': 3 + state.zoom + 'vh'
         }
       },
       cssHeightMinutes(state) {
@@ -96,14 +96,14 @@ export default {
   .one_hour {
     width: 100%;
     min-height: 8vh;
-    border-top: solid 1px #9c9c9c;
+    border-top: solid 1px #c9c9c9;
     text-align: left;
   }
 
   .time {
     display: inline;
     font-size: 0.75em;
-    color: dimgrey;
+    color: #8f8f8f;
   }
 
   p {
