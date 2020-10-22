@@ -18,16 +18,39 @@
       <button class="scale_change" v-on:click="plusClick">＋</button>
       <button class="scale_change" v-on:click="minusClick">－</button>
     </p>
+    <div class="task_add_modal">
+      <button class="task_add_button" @click="openModal">タスク追加</button>
+      <MyModal @close="closeModal" v-if="modal">
+        <input class="title" type="text" maxlength="100" placeholder="タイトル" v-model="task_title"><br>
+        <label>開始日時：<input type="datetime-local"></label><br>
+        <label>終了日時：<input type="datetime-local"></label><br>
+        <textarea placeholder="詳細" maxlength="10000" v-model="task_detail" cols="50" rows="10"></textarea>
+        <template slot="footer">
+          <button class="enter_task" @click="doSend">決定</button>
+        </template>
+      </MyModal>
+    </div>
   </div>
 </template>
 
 <script>
+import MyModal from './MyModal.vue'
 import {mapState} from 'vuex'
 
 export default {
+  components: {
+    MyModal
+  },
   name: 'left_column',
   props: {
     msg: String
+  },
+  data() {
+    return {
+      modal: false,
+      task_title: '',
+      task_detail: '',
+    }
   },
   computed: {
     ...mapState(['zoom'])
@@ -39,6 +62,21 @@ export default {
     minusClick() {
       this.$store.commit('minusClick')
     },
+    openModal() {
+      this.modal = true
+    },
+    closeModal() {
+      this.modal = false
+    },
+    doSend() {
+      if (this.title.length > 0) {
+        alert(this.title)
+        this.title = ''
+        this.closeModal()
+      } else {
+        alert('メッセージを入力してください')
+      }
+    }
   },
 }
 </script>
@@ -60,6 +98,9 @@ h1 {
   padding-bottom: 20px;
 }
 
+p {
+  margin: 2em;
+}
 /*select {*/
 /*  font-size:1.1em;*/
 /*  margin: 1em;*/
@@ -79,12 +120,31 @@ button {
   padding: 0.2em;
 }
 
+.task_add_modal {
+  line-height: 2em;
+}
+
+.task_add_button {
+  padding: 0.2em;
+}
+
+.title {
+  margin: 0.5em;
+  padding: 0.3em;
+  font-size: 1.1em;
+  width: 21em;
+}
+
+textarea {
+  margin: 1em;
+  padding: 0.6em;
+  font-size: 1.1em;
+}
+
+.enter_task {
+  padding: 0.7em 1.2em;
+}
 /*.page_change {*/
 /*  margin: 0.5em;*/
 /*}*/
-
-.scale_change {
-  font-size: 1.5em;
-  padding: 0.2em;
-}
 </style>
