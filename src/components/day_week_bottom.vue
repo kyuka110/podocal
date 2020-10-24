@@ -10,7 +10,7 @@
 
 <script>
 import {mapState} from 'vuex'
-import axios from 'axios';
+import axios from 'axios'
 export default {
   name: "day_week_bottom",
   props: {

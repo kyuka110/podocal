@@ -34,8 +34,9 @@
 </template>
 
 <script>
-import MyModal from './MyModal.vue'
+import MyModal from './modal.vue'
 import {mapState} from 'vuex'
+import axios from 'axios'
 
 export default {
   components: {
@@ -50,6 +51,8 @@ export default {
       modal: false,
       task_title: '',
       task_detail: '',
+      // unix_start_time: '',
+      // unix_end_time: ''
     }
   },
   computed: {
@@ -69,15 +72,33 @@ export default {
       this.modal = false
     },
     doSend() {
-      if (this.title.length > 0) {
-        alert(this.title)
-        this.title = ''
-        this.closeModal()
-      } else {
-        alert('メッセージを入力してください')
+      if (this.task_title == '') {
+        this.closeModal();
+        return;
       }
+      if (this.task_title.trim() == '') {
+        this.task_title = ''
+        this.task_detail = ''
+        this.closeModal();
+        return;
+      }
+      this.setTask();
+    },
+    setTask(){
+      axios.get('https://wa1mn8ww9e.execute-api.ap-northeast-1.amazonaws.com/prod/setSingleTask', {
+        params: {
+          unix_start_time: 12345,
+          unix_end_time: 67890,
+          title: this.task_title,
+          detail: this.task_detail
+        }
+      });
+      this.task_title = ''
+      this.task_detail = ''
+      this.closeModal();
+      return;
     }
-  },
+  }
 }
 </script>
 
