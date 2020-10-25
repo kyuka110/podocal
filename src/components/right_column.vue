@@ -1,10 +1,10 @@
 <template>
     <div id ="right_main">
       <div id ="day_week_box_top">
-        <day_week_top v-for="i in day_or_week" :key="first_day + i" :day_or_week="day_or_week" :day="setDay(i)" :day_of_the_week="setDayOfTheWeek(i)"></day_week_top>
+        <day_week_top v-for="i in returnDispDays" :key="first_day + i" :day_or_week="returnDispDays" :day="setDay(i)" :day_of_the_week="setDayOfTheWeek(i)"></day_week_top>
       </div>
       <div id ="day_week_box_bottom">
-        <day_week_bottom v-for="i in day_or_week" :key="first_day + i" :day_or_week="day_or_week" :time="setDate(i)"></day_week_bottom>
+        <day_week_bottom v-for="i in returnDispDays" :key="first_day + i" :day_or_week="returnDispDays" :time="setDate(i)"></day_week_bottom>
       </div>
     </div>
 </template>
@@ -13,6 +13,7 @@
 import day_week_top from './day_week_top.vue'
 import day_week_bottom from './day_week_bottom.vue'
 import axios from "axios"
+import {mapGetters} from "vuex";
 export default {
   name: 'right_column',
   components: {
@@ -21,9 +22,11 @@ export default {
   },
   data () {
     return {
-      day_or_week: 7,
       first_day: 29,
     }
+  },
+  computed: {
+      ...mapGetters(['returnDispDays'])
   },
   methods: {
      // 今日の0時 + 1日、2日…と返す
@@ -119,7 +122,7 @@ export default {
 
 #day_week_box_bottom {
   overflow: auto;
-  height: 78vh;
+  height: 86vh;
 }
 
 ::-webkit-scrollbar{

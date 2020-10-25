@@ -10,7 +10,8 @@ export default new Vuex.Store({
     dataSet: {},
     searchBeginTime:  4765100399000, //2120-12-31 23:59:59
     searchEndTime: 0,
-    paintId: []
+    paintId: [],
+    dispDays: 7
   },
   mutations: {
     plusClick(state) {
@@ -34,6 +35,9 @@ export default new Vuex.Store({
         state.searchEndTime = payload.newtime;
       }
     },
+    changeDispDays(state, payload) {
+      state.dispDays = payload.days;
+    },
     addPaintId(state, payload) {
       state.paintId.push(payload.id);
     }
@@ -44,6 +48,9 @@ export default new Vuex.Store({
   getters: {
     returnPaintId(state){
       return state.paintId;
+    },
+    returnDispDays(state){
+      return state.dispDays;
     }
   },
   modules: {
