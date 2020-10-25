@@ -79,6 +79,7 @@ export default {
       add (value){
           this.$store.commit('addPaintId', {id:value})
       },
+      // タスクがある場所として塗るところを計算
       calPaintId(starttime, endtime) {
           var i = 0;
           var unixStartTime = starttime * 1000;
@@ -101,6 +102,7 @@ export default {
       }
   },
   created() {
+      // タスク取得
       axios.get('https://jxff6ecyn2.execute-api.ap-northeast-1.amazonaws.com/prod/getsingletask')
           .then(response => {
               for(var i = 0; i < response.data.body.length; i++){

@@ -10,8 +10,6 @@
         <option value=7>週</option>
         <option value=1>日</option>
       </select>
-<!--      <span class="page_change">＜</span>-->
-<!--      <span class="page_change">＞</span>-->
     </p>
     <p>
       <button class="scale_change" v-on:click="plusClick">＋</button>
@@ -97,6 +95,7 @@ export default {
     add (value){
         this.$store.commit('addPaintId', {id:value})
     },
+    // タスクがある場所として塗るところを計算
     calPaintId(starttime, endtime){
         var i = 0;
         var unixStartTime = starttime * 1000;
