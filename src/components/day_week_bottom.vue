@@ -68,14 +68,14 @@ export default {
   .one_hour {
     width: 100%;
     min-height: 8vh;
-    border-top: solid 1px #c9c9c9;
+    border-top: solid 1px #b3c5d6;
     text-align: left;
   }
 
   .time {
     display: inline;
     font-size: 0.75em;
-    color: #8f8f8f;
+    color: #8a96a3;
   }
 
   p {

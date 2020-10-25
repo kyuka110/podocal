@@ -131,7 +131,6 @@ export default {
 #left_main {
   width: 250px;
   min-height: 100vh;
-  background-color: mintcream;
 }
 
 #podocal_logo {
@@ -157,13 +156,19 @@ p {
 /*}*/
 
 button {
-  background-color: white;
-  border-width: 1px;
+  background-color: #2c3e50;
+  color: white;
+  border: none;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .scale_change {
-  font-size: 1.5em;
-  padding: 0.2em;
+  font-size: 1.7em;
+  padding: 0.2em 0.5em;
+  margin: 0.1em;
 }
 
 .task_add_modal {
@@ -171,7 +176,8 @@ button {
 }
 
 .task_add_button {
-  padding: 0.2em;
+  font-size: 1.2em;
+  padding:0.5em;
 }
 
 .title {

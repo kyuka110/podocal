@@ -39,7 +39,7 @@ export default {
 
 p {
   width: 100%;
-  min-height: 8vh;
+  min-height: 1vh;
 }
 
 span {
@@ -56,7 +56,6 @@ span {
 }
 
 .all_day {
-  height: 3em;
-  background-color: aquamarine;
+  height: 1em;
 }
 </style>
