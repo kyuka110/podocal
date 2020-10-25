@@ -4,16 +4,15 @@
       <img alt="podocal logo" id="podocal_logo" src="../assets/podocal.png">
       {{ msg }}
     </h1>
-<!--    あとで追加する-->
-<!--    <p>-->
-<!--      <select>-->
-<!--        <option value="day">日</option>-->
-<!--        <option value="week">週</option>-->
-<!--        <option value="month">月</option>-->
-<!--      </select>-->
+    <p>
+      <select v-model="selected" @change="dispDayOrWeek">
+        <option disabled value="">週 / 日</option>
+        <option value=7>週</option>
+        <option value=1>日</option>
+      </select>
 <!--      <span class="page_change">＜</span>-->
 <!--      <span class="page_change">＞</span>-->
-<!--    </p>-->
+    </p>
     <p>
       <button class="scale_change" v-on:click="plusClick">＋</button>
       <button class="scale_change" v-on:click="minusClick">－</button>
@@ -52,13 +51,17 @@ export default {
       task_title: '',
       task_detail: '',
       task_start_time: '',
-      task_end_time: ''
+      task_end_time: '',
+      selected: ''
     }
   },
   computed: {
     ...mapState(['zoom'])
   },
   methods: {
+    dispDayOrWeek(){
+      this.$store.commit('changeDispDays', {days:Number(this.selected)})
+    },
     plusClick() {
       this.$store.commit('plusClick')
     },
@@ -144,16 +147,17 @@ h1 {
 }
 
 p {
-  margin: 2em;
+  margin: 1.5em;
 }
-/*select {*/
-/*  font-size:1.1em;*/
-/*  margin: 1em;*/
-/*  padding: 0.5em;*/
-/*  line-height: 1.5em;*/
-/*  cursor: pointer;*/
-/*  outline: none;*/
-/*}*/
+select {
+  font-size:1.1em;
+  padding: 0.5em;
+  line-height: 1.5em;
+  cursor: pointer;
+  outline: none;
+  background-color: #2c3e50;
+  color: white;
+}
 
 button {
   background-color: #2c3e50;
