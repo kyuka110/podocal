@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -9,8 +8,9 @@ export default new Vuex.Store({
   state: {
     zoom: 0,
     dataSet: {},
-    searchBeginTime:  4765100399000,
-    searchEndTime: 0
+    searchBeginTime:  4765100399000, //2120-12-31 23:59:59
+    searchEndTime: 0,
+    paintId: []
   },
   mutations: {
     plusClick(state) {
@@ -33,13 +33,18 @@ export default new Vuex.Store({
       if (payload.newtime > state.searchEndTime){
         state.searchEndTime = payload.newtime;
       }
+    },
+    addPaintId(state, payload) {
+      state.paintId.push(payload.id);
     }
   },
   actions: {
 
   },
   getters: {
-    getStateDataSet: (state) => state.dataSet,
+    returnPaintId(state){
+      return state.paintId;
+    }
   },
   modules: {
   }
