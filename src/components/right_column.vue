@@ -12,6 +12,7 @@
 <script>
 import day_week_top from './day_week_top.vue'
 import day_week_bottom from './day_week_bottom.vue'
+import axios from "axios"
 export default {
   name: 'right_column',
   components: {
@@ -71,7 +72,35 @@ export default {
                  break;
          }
          return dayStr;
-     }
+     },
+      add (value){
+          this.$store.commit('addPaintId', {id:value})
+      },
+      calPaintId(starttime, endtime) {
+          var i = 0;
+          var unixStartTime = starttime * 1000;
+          var unixEndTime = endtime * 1000;
+          for (; ;) {
+              if (unixEndTime <= (unixStartTime + 900000 * i)) {
+                  break;
+              }
+              var startmiltime = new Date(unixStartTime + 900000 * i);
+              this.add(String(startmiltime.getFullYear()) + String(startmiltime.getMonth() + 1)
+                  + String(startmiltime.getDate()) + String(('00' + startmiltime.getHours()).slice(-2)) + String(startmiltime.getMinutes()));
+              i++;
+          }
+      }
+  },
+  created() {
+      axios.get('https://jxff6ecyn2.execute-api.ap-northeast-1.amazonaws.com/prod/getsingletask')
+          .then(response => {
+              for(var i = 0; i < response.data.body.length; i++){
+                  this.calPaintId(response.data["body"][i]["unix_start_time"], response.data["body"][i]["unix_end_time"])
+              }
+          })
+          .catch((reason) => {
+              console.log(reason.message)
+          })
   }
 }
 </script>
@@ -80,7 +109,6 @@ export default {
 #right_main {
     flex: 1;
     min-height:100vh;
-    background-color: oldlace;
 }
 
 #day_week_box_top, #day_week_box_bottom{

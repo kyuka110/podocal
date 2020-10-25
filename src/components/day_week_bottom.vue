@@ -1,7 +1,7 @@
 <template>
   <div id ="each_day_box_bottom" :style="cssWidth">
     <div v-for="i in 24" :id="calTimeLineHourId(i)" :key="i" class="one_hour" :style="cssHeightHour">
-      <div v-for="j in 4" :id="calTimeLineMinutesId(i, j)" :key="j" :style="cssHeightMinutes" :class="{scheduled_area: paintId.indexOf(calTimeLineMinutesId(i, j)) >= 0 }">
+      <div v-for="j in 4" :id="calTimeLineMinutesId(i, j)" :key="j" :style="cssHeightMinutes" :class="{scheduled_area: returnPaintId.indexOf(calTimeLineMinutesId(i, j)) >= 0 }">
         <p v-if="j == 1" class="time">{{i - 1}}:00</p>
       </div>
     </div>
@@ -10,17 +10,12 @@
 
 <script>
 import {mapState} from 'vuex'
-import axios from 'axios';
+import {mapGetters} from 'vuex'
 export default {
   name: "day_week_bottom",
   props: {
     day_or_week: Number,
-    time: Number
-  },
-  data (){
-    return {
-      paintId:[]
-    }
+    time: Number,
   },
   computed: {
     cssWidth() {
@@ -31,7 +26,7 @@ export default {
     ...mapState({
       cssHeightHour(state) {
         return {
-          'min-height': 4 + state.zoom + 'vh'
+          'min-height': 3 + state.zoom + 'vh'
         }
       },
       cssHeightMinutes(state) {
@@ -40,6 +35,7 @@ export default {
         }
       }
     }),
+    ...mapGetters(['returnPaintId'])
   },
   methods: {
     calTimeLineHourId(i){
@@ -55,32 +51,8 @@ export default {
       return String(baseDate.getFullYear()) + String(baseDate.getMonth() + 1)
               + String(baseDate.getDate()) + String(('00' + (i - 1)).slice(-2)) + String((j - 1) * 15);
     },
-    calPaintId(starttime, endtime){
-      var paintId = [];
-      var i = 0;
-      var unixStartTime = starttime * 1000;
-      var unixEndTime = endtime * 1000;
-      for (; ;) {
-        if (unixEndTime <= (unixStartTime + 900000 * i)) {
-          break;
-        }
-        var startmiltime = new Date(unixStartTime + 900000 * i);
-        paintId.push(String(startmiltime.getFullYear()) + String(startmiltime.getMonth() + 1)
-                + String(startmiltime.getDate()) + String(('00' + startmiltime.getHours()).slice(-2)) + String(startmiltime.getMinutes()));
-        i++;
-      }
-      this.paintId = paintId;
-    }
+
   },
-  created() {
-      axios.get('https://jxff6ecyn2.execute-api.ap-northeast-1.amazonaws.com/prod/getsingletask')
-              .then(response => {
-                this.calPaintId(response.data["body"]["0"]["unix_start_time"], response.data["body"]["0"]["unix_end_time"])
-              })
-              .catch((reason) => {
-                console.log(reason.message)
-              })
-  }
 }
 
 </script>
@@ -96,14 +68,14 @@ export default {
   .one_hour {
     width: 100%;
     min-height: 8vh;
-    border-top: solid 1px #9c9c9c;
+    border-top: solid 1px #b3c5d6;
     text-align: left;
   }
 
   .time {
     display: inline;
     font-size: 0.75em;
-    color: dimgrey;
+    color: #8a96a3;
   }
 
   p {

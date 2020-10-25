@@ -30,6 +30,5 @@ export default {
   color: #2c3e50;
   border-color: #424242;
   display: flex;
-  background-color: oldlace;
 }
 </style>
