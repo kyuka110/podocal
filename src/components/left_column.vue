@@ -56,7 +56,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['zoom'])
+    ...mapState(['zoom']),
   },
   methods: {
     dispDayOrWeek(){
@@ -111,6 +111,12 @@ export default {
             i++;
         }
     },
+    calTaskTitleTime(time){
+        var miltime = time * 1000;
+        var dateobj = new Date(miltime);
+        return String(dateobj.getFullYear()) + String(dateobj.getMonth() + 1)
+            + String(dateobj.getDate()) + String(('00' + dateobj.getHours()).slice(-2)) + String(dateobj.getMinutes());
+    },
     setTask(starttime, endtime){
       axios.get('https://wa1mn8ww9e.execute-api.ap-northeast-1.amazonaws.com/prod/setSingleTask', {
         params: {
@@ -121,11 +127,15 @@ export default {
         }
       });
       this.calPaintId(starttime, endtime);
+      this.$store.commit('addTask', {
+          title: this.task_title,
+          first: starttime
+      })
       this.task_title = '';
       this.task_detail = '';
       this.closeModal();
       return;
-    }
+    },
   }
 }
 </script>
