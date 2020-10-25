@@ -1,7 +1,7 @@
 <template>
-  <div id ="each_day_box_bottom" :style="cssWidth">
+  <div id="each_day_box_bottom" :style="cssWidth">
     <div v-for="i in 24" :id="calTimeLineHourId(i)" :key="i" class="one_hour" :style="cssHeightHour">
-      <div v-for="j in 4" :id="calTimeLineMinutesId(i, j)" :key="j" :style="cssHeightMinutes" :class="{scheduled_area: returnPaintId.indexOf(calTimeLineMinutesId(i, j)) >= 0 }">
+      <div v-for="j in 4" :id="calTimeLineMinutesId(i, j)" :key="j" :style="cssHeightMinutes" :class="{scheduled_area: returnPaintId.indexOf(calTimeLineMinutesId(i, j)) >= 0}">
         <span v-if="j == 1" class="time">{{i - 1}}:00 </span><span class="title" :style="cssTitle">{{dispTaskTitle(calTimeLineMinutesId(i, j))}}</span>
       </div>
     </div>
@@ -43,6 +43,7 @@ export default {
     ...mapGetters(['returnPaintId'])
   },
   methods: {
+    // 1時間ごとのdiv要素のidを作成
     calTimeLineHourId(i){
       this.$store.commit('changeBeginTime', {newtime:this.time})
       this.$store.commit('changeEndTime', {newtime:this.time})
@@ -51,11 +52,13 @@ export default {
       return String(baseDate.getFullYear()) + String(baseDate.getMonth() + 1)
            + String(baseDate.getDate()) + String(i - 1);
     },
+    // 15分ごとのdiv要素のidを作成
     calTimeLineMinutesId(i, j){
       var baseDate = new Date(this.time)
       return String(baseDate.getFullYear()) + String(baseDate.getMonth() + 1)
               + String(baseDate.getDate()) + String(('00' + (i - 1)).slice(-2)) + String((j - 1) * 15);
     },
+    // タスクのタイトル表示
     dispTaskTitle(checkId){
       for(var i = 0; i< this.$store.state.first.length; i++){
           if (checkId == this.$store.state.first[i]){
