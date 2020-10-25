@@ -92,13 +92,23 @@ export default {
                   + String(startmiltime.getDate()) + String(('00' + startmiltime.getHours()).slice(-2)) + String(startmiltime.getMinutes()));
               i++;
           }
+      },
+      calTaskTitleTime(time){
+          var miltime = time * 1000;
+          var dateobj = new Date(miltime);
+          return String(dateobj.getFullYear()) + String(dateobj.getMonth() + 1)
+              + String(dateobj.getDate()) + String(('00' + dateobj.getHours()).slice(-2)) + String(dateobj.getMinutes());
       }
   },
   created() {
       axios.get('https://jxff6ecyn2.execute-api.ap-northeast-1.amazonaws.com/prod/getsingletask')
           .then(response => {
               for(var i = 0; i < response.data.body.length; i++){
-                  this.calPaintId(response.data["body"][i]["unix_start_time"], response.data["body"][i]["unix_end_time"])
+                  this.calPaintId(response.data["body"][i]["unix_start_time"], response.data["body"][i]["unix_end_time"]);
+                  this.$store.commit('addTask', {
+                      title: response.data["body"][i]["title"],
+                      first: this.calTaskTitleTime(response.data["body"][i]["unix_start_time"])
+                  })
               }
           })
           .catch((reason) => {

@@ -16,11 +16,11 @@ export default new Vuex.Store({
   },
   mutations: {
     plusClick(state) {
-      state.zoom = state.zoom + 1
+      state.zoom = state.zoom + 5
     },
     minusClick(state) {
       if (state.zoom > 0) {
-        state.zoom = state.zoom - 1
+        state.zoom = state.zoom - 5
       }
     },
     changeBeginTime(state, payload) {
