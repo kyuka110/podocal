@@ -34,6 +34,10 @@
 import MyModal from './modal.vue'
 import {mapState} from 'vuex'
 import axios from 'axios'
+import dayjs from 'dayjs'
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+
+dayjs.extend(isSameOrAfter);
 
 export default {
   components: {
@@ -84,9 +88,9 @@ export default {
         this.closeModal();
         return;
       }
-      var starttime = Date.parse(this.task_start_time) / 1000;
-      var endtime =  Date.parse(this.task_end_time) / 1000;
-      if(starttime >= endtime){
+      var starttime = dayjs(this.task_start_time);
+      var endtime =  dayjs(this.task_end_time);
+      if(starttime.isSameOrAfter(endtime)){
           alert('開始時刻は終了時刻より前に設定して下さい');
           return;
       }
@@ -119,8 +123,8 @@ export default {
     setTask(starttime, endtime){
       axios.get('https://wa1mn8ww9e.execute-api.ap-northeast-1.amazonaws.com/prod/setSingleTask', {
         params: {
-          unix_start_time: starttime,
-          unix_end_time: endtime,
+          unix_start_time: starttime.unix(),
+          unix_end_time: endtime.unix(),
           title: this.task_title,
           detail: this.task_detail
         }

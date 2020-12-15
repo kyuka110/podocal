@@ -1,10 +1,10 @@
 <template>
     <div id ="right_main">
       <div id ="day_week_box_top">
-        <day_week_top v-for="i in returnDispDays" :key="first_day + i" :day_or_week="returnDispDays" :day="setDay(i)" :day_of_the_week="setDayOfTheWeek(i)"></day_week_top>
+        <day_week_top v-for="i in returnDispDays" :key="firstDay + i" :day_or_week="returnDispDays" :day="setDay(i)" :day_of_the_week="setDayOfTheWeek(i)"></day_week_top>
       </div>
       <div id ="day_week_box_bottom">
-        <day_week_bottom v-for="i in returnDispDays" :key="first_day + i" :day_or_week="returnDispDays" :time="setDate(i)"></day_week_bottom>
+        <day_week_bottom v-for="i in returnDispDays" :key="firstDay + i" :day_or_week="returnDispDays" :time="setDate(i)"></day_week_bottom>
       </div>
     </div>
 </template>
@@ -14,6 +14,11 @@ import day_week_top from './day_week_top.vue'
 import day_week_bottom from './day_week_bottom.vue'
 import axios from "axios"
 import {mapGetters} from "vuex";
+import dayjs from "dayjs";
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+
+dayjs.extend(isSameOrBefore);
+
 export default {
   name: 'right_column',
   components: {
@@ -22,7 +27,7 @@ export default {
   },
   data () {
     return {
-      first_day: 29,
+      firstDay: 29,
     }
   },
   computed: {
@@ -31,27 +36,21 @@ export default {
   methods: {
      // 今日の0時 + 1日、2日…と返す
      setDate(i){
-       var today = new Date()
-       // 今日の0時のunixtime(UTC)
-       var utc0unix = Date.UTC( today.getFullYear(), today.getMonth(), today.getDate());
-       // 32400000 = 9時間。
-       var jst0unix = utc0unix + 32400000;
-       var jst0 = new Date(jst0unix);
-       jst0.setTime(jst0.getTime() + (i - 1) * 86400000);
-       return jst0.getTime();
+       // 今日の0時
+       var jst0 = dayjs().startOf('date');
+       var returnDate = jst0.add(i - 1,'day');
+       return returnDate.valueOf();
      },
      // 日付返却
      setDay(i){
-         var today = new Date();
-         today.setDate(today.getDate() + i - 1);
-         return today.getDate();
+       var returnDate = dayjs().add(i - 1,'day');
+       return returnDate.date();
      },
       // 曜日返却
      setDayOfTheWeek(i){
-         var today = new Date();
-         today.setDate(today.getDate() + i - 1);
+         var returnDate = dayjs().add(i - 1,'day');
          var dayStr = '日'
-         switch(today.getDay()){
+         switch(returnDate.day()){
              case 0:
                  dayStr = '日';
                  break;
@@ -82,16 +81,15 @@ export default {
       // タスクがある場所として塗るところを計算
       calPaintId(starttime, endtime) {
           var i = 0;
-          var unixStartTime = starttime * 1000;
-          var unixEndTime = endtime * 1000;
+          var startTime = dayjs.unix(starttime);
+          var endTime = dayjs.unix(endtime);
           for (; ;) {
-              if (unixEndTime <= (unixStartTime + 900000 * i)) {
-                  break;
-              }
-              var startmiltime = new Date(unixStartTime + 900000 * i);
-              this.add(String(startmiltime.getFullYear()) + String(startmiltime.getMonth() + 1)
-                  + String(startmiltime.getDate()) + String(('00' + startmiltime.getHours()).slice(-2)) + String(startmiltime.getMinutes()));
-              i++;
+            var startPaintTime = startTime.add(i * 15,'minute');
+            if (endTime.isSameOrBefore(startPaintTime)){
+              break;
+            }
+            this.add(startPaintTime.format('YYYYMMDDHHm'));
+            i++;
           }
       },
       calTaskTitleTime(time){
