@@ -11,6 +11,7 @@
 <script>
 import {mapState} from 'vuex'
 import {mapGetters} from 'vuex'
+import dayjs from 'dayjs'
 export default {
   name: "day_week_bottom",
   props: {
@@ -48,15 +49,13 @@ export default {
       this.$store.commit('changeBeginTime', {newtime:this.time})
       this.$store.commit('changeEndTime', {newtime:this.time})
       //idを設定
-      var baseDate = new Date(this.time)
-      return String(baseDate.getFullYear()) + String(baseDate.getMonth() + 1)
-           + String(baseDate.getDate()) + String(i - 1);
+      var baseDate = dayjs.unix(this.time);
+      return baseDate.format('YYYYMMDDHH') + String(i - 1);
     },
     // 15分ごとのdiv要素のidを作成
     calTimeLineMinutesId(i, j){
-      var baseDate = new Date(this.time)
-      return String(baseDate.getFullYear()) + String(baseDate.getMonth() + 1)
-              + String(baseDate.getDate()) + String(('00' + (i - 1)).slice(-2)) + String((j - 1) * 15);
+      var baseDate = dayjs.unix(this.time);
+      return baseDate.format('YYYYMMDD')+ String(('00' + (i - 1)).slice(-2)) + String((j - 1) * 15);
     },
     // タスクのタイトル表示
     dispTaskTitle(checkId){

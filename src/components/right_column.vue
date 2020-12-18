@@ -39,7 +39,7 @@ export default {
        // 今日の0時
        var jst0 = dayjs().startOf('date');
        var returnDate = jst0.add(i - 1,'day');
-       return returnDate.valueOf();
+       return returnDate.unix();
      },
      // 日付返却
      setDay(i){
@@ -84,19 +84,17 @@ export default {
           var startTime = dayjs.unix(starttime);
           var endTime = dayjs.unix(endtime);
           for (; ;) {
-            var startPaintTime = startTime.add(i * 15,'minute');
-            if (endTime.isSameOrBefore(startPaintTime)){
+            var paintTime = startTime.add(i * 15,'minute');
+            if (endTime.isSameOrBefore(paintTime)){
               break;
             }
-            this.add(startPaintTime.format('YYYYMMDDHHm'));
+            this.add(paintTime.format('YYYYMMDDHHm'));
             i++;
           }
       },
       calTaskTitleTime(time){
-          var miltime = time * 1000;
-          var dateobj = new Date(miltime);
-          return String(dateobj.getFullYear()) + String(dateobj.getMonth() + 1)
-              + String(dateobj.getDate()) + String(('00' + dateobj.getHours()).slice(-2)) + String(dateobj.getMinutes());
+          var dateobj = dayjs.unix(time);
+          return dateobj.format('YYYYMMDDHHm');
       }
   },
   created() {

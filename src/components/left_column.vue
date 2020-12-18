@@ -100,25 +100,22 @@ export default {
         this.$store.commit('addPaintId', {id:value})
     },
     // タスクがある場所として塗るところを計算
-    calPaintId(starttime, endtime){
-        var i = 0;
-        var unixStartTime = starttime * 1000;
-        var unixEndTime = endtime * 1000;
-        for (; ;) {
-            if (unixEndTime <= (unixStartTime + 900000 * i)) {
-                break;
-            }
-            var startmiltime = new Date(unixStartTime + 900000 * i);
-            this.add(String(startmiltime.getFullYear()) + String(startmiltime.getMonth() + 1)
-                + String(startmiltime.getDate()) + String(('00' + startmiltime.getHours()).slice(-2)) + String(startmiltime.getMinutes()));
-            i++;
+    calPaintId(starttime, endtime) {
+      var i = 0;
+      var startTime = dayjs.unix(starttime);
+      var endTime = dayjs.unix(endtime);
+      for (; ;) {
+        var paintTime = startTime.add(i * 15,'minute');
+        if (endTime.isSameOrBefore(paintTime)){
+          break;
         }
+        this.add(paintTime.format('YYYYMMDDHHm'));
+        i++;
+      }
     },
     calTaskTitleTime(time){
-        var miltime = time * 1000;
-        var dateobj = new Date(miltime);
-        return String(dateobj.getFullYear()) + String(dateobj.getMonth() + 1)
-            + String(dateobj.getDate()) + String(('00' + dateobj.getHours()).slice(-2)) + String(dateobj.getMinutes());
+      var dateobj = dayjs.unix(time);
+      return dateobj.format('YYYYMMDDHHm');
     },
     setTask(starttime, endtime){
       axios.get('https://wa1mn8ww9e.execute-api.ap-northeast-1.amazonaws.com/prod/setSingleTask', {
