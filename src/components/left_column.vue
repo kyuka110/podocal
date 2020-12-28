@@ -62,13 +62,13 @@ export default {
   },
   methods: {
     dispDayOrWeek(){
-      this.$store.commit('changeDispDays', {days:Number(this.selected)})
+      this.$store.commit('mm/changeDispDays', {days:Number(this.selected)})
     },
     plusClick() {
-      this.$store.commit('plusClick')
+      this.$store.commit('mm/plusClick')
     },
     minusClick() {
-      this.$store.commit('minusClick')
+      this.$store.commit('mm/minusClick')
     },
     openModal() {
       this.modal = true
@@ -97,7 +97,7 @@ export default {
       this.setTask(starttime, endtime);
     },
     add (value){
-        this.$store.commit('addPaintId', {id:value})
+        this.$store.commit('mm/addPaintId', {id:value})
     },
     // タスクがある場所として塗るところを計算
     calPaintId(starttime, endtime) {
@@ -127,7 +127,7 @@ export default {
         }
       });
       this.calPaintId(starttime, endtime);
-      this.$store.commit('addTask', {
+      this.$store.commit('mm/addTask', {
           title: this.task_title,
           first: starttime
       })

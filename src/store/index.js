@@ -3,8 +3,9 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const mainModule = {
   strict: true,
+  namespaced: true,
   state: {
     zoom: 0,
     searchBeginTime:  4765100399000, //2120-12-31 23:59:59
@@ -53,8 +54,20 @@ export default new Vuex.Store({
     },
     returnDispDays(state){
       return state.dispDays;
+    },
+    returnFirst(state){
+      return state.first;
+    },
+    returnTitle(state){
+      return state.title;
     }
   },
   modules: {
   }
-})
+}
+
+export default new Vuex.Store({
+  modules: {
+    mm: mainModule,
+  }
+});
