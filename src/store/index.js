@@ -7,7 +7,6 @@ const mainModule = {
   strict: true,
   namespaced: true,
   state: {
-    zoom: 0,
     searchBeginTime:  4765100399000, //2120-12-31 23:59:59
     searchEndTime: 0,
     paintId: [],
@@ -16,14 +15,6 @@ const mainModule = {
     first: []
   },
   mutations: {
-    plusClick(state) {
-      state.zoom = state.zoom + 5
-    },
-    minusClick(state) {
-      if (state.zoom > 0) {
-        state.zoom = state.zoom - 5
-      }
-    },
     changeBeginTime(state, payload) {
       if (payload.newtime < state.searchBeginTime){
         state.searchBeginTime = payload.newtime;
@@ -66,8 +57,25 @@ const mainModule = {
   }
 }
 
+const scaleModule = {
+  strict: true,
+  namespaced: true,
+  state: {
+    zoom: 0,
+  },
+  plusClick(state) {
+    state.zoom = state.zoom + 5
+  },
+  minusClick(state) {
+    if (state.zoom > 0) {
+      state.zoom = state.zoom - 5
+    }
+  }
+}
+
 export default new Vuex.Store({
   modules: {
     mm: mainModule,
+    sm: scaleModule
   }
 });

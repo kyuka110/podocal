@@ -65,10 +65,10 @@ export default {
       this.$store.commit('mm/changeDispDays', {days:Number(this.selected)})
     },
     plusClick() {
-      this.$store.commit('mm/plusClick')
+      this.$store.commit('sm/plusClick')
     },
     minusClick() {
-      this.$store.commit('mm/minusClick')
+      this.$store.commit('sm/minusClick')
     },
     openModal() {
       this.modal = true
