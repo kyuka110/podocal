@@ -24,7 +24,7 @@ export default {
         '--content-width': (100 / this.day_or_week) + '%'
       }
     },
-    ...mapState({
+    ...mapState('mm', {
       cssHeightHour(state) {
         return {
           'min-height': 72 + state.zoom + 'px'
@@ -41,13 +41,13 @@ export default {
         }
       }
     }),
-    ...mapGetters(['returnPaintId'])
+    ...mapGetters('mm', ['returnPaintId'])
   },
   methods: {
     // 1時間ごとのdiv要素のidを作成
     calTimeLineHourId(i){
-      this.$store.commit('changeBeginTime', {newtime:this.time})
-      this.$store.commit('changeEndTime', {newtime:this.time})
+      this.$store.commit('mm/changeBeginTime', {newtime:this.time})
+      this.$store.commit('mm/changeEndTime', {newtime:this.time})
       //idを設定
       var baseDate = dayjs.unix(this.time);
       return baseDate.format('YYYYMMDDHH') + String(i - 1);
@@ -59,13 +59,13 @@ export default {
     },
     // タスクのタイトル表示
     dispTaskTitle(checkId){
-      for(var i = 0; i< this.$store.state.first.length; i++){
-          if (checkId == this.$store.state.first[i]){
-              return this.$store.state.title[i];
-          }
+      for(var i = 0; i< this.$store.getters['mm/returnFirst'].length; i++){
+        if (checkId == this.$store.getters['mm/returnFirst'][i]){
+          return this.$store.getters['mm/returnTitle'][i];
+        }
       }
     }
-  },
+  }
 }
 
 </script>

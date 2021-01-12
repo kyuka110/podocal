@@ -3,10 +3,10 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const mainModule = {
   strict: true,
+  namespaced: true,
   state: {
-    zoom: 0,
     searchBeginTime:  4765100399000, //2120-12-31 23:59:59
     searchEndTime: 0,
     paintId: [],
@@ -15,14 +15,6 @@ export default new Vuex.Store({
     first: []
   },
   mutations: {
-    plusClick(state) {
-      state.zoom = state.zoom + 5
-    },
-    minusClick(state) {
-      if (state.zoom > 0) {
-        state.zoom = state.zoom - 5
-      }
-    },
     changeBeginTime(state, payload) {
       if (payload.newtime < state.searchBeginTime){
         state.searchBeginTime = payload.newtime;
@@ -53,8 +45,37 @@ export default new Vuex.Store({
     },
     returnDispDays(state){
       return state.dispDays;
+    },
+    returnFirst(state){
+      return state.first;
+    },
+    returnTitle(state){
+      return state.title;
     }
   },
   modules: {
   }
-})
+}
+
+const scaleModule = {
+  strict: true,
+  namespaced: true,
+  state: {
+    zoom: 0,
+  },
+  plusClick(state) {
+    state.zoom = state.zoom + 5
+  },
+  minusClick(state) {
+    if (state.zoom > 0) {
+      state.zoom = state.zoom - 5
+    }
+  }
+}
+
+export default new Vuex.Store({
+  modules: {
+    mm: mainModule,
+    sm: scaleModule
+  }
+});

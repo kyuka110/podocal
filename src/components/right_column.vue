@@ -31,7 +31,7 @@ export default {
     }
   },
   computed: {
-      ...mapGetters(['returnDispDays'])
+      ...mapGetters('mm', ['returnDispDays'])
   },
   methods: {
      // 今日の0時 + 1日、2日…と返す
@@ -76,7 +76,7 @@ export default {
          return dayStr;
      },
       add (value){
-          this.$store.commit('addPaintId', {id:value})
+          this.$store.commit('mm/addPaintId', {id:value})
       },
       // タスクがある場所として塗るところを計算
       calPaintId(starttime, endtime) {
@@ -103,7 +103,7 @@ export default {
           .then(response => {
               for(var i = 0; i < response.data.body.length; i++){
                   this.calPaintId(response.data["body"][i]["unix_start_time"], response.data["body"][i]["unix_end_time"]);
-                  this.$store.commit('addTask', {
+                  this.$store.commit('mm/addTask', {
                       title: response.data["body"][i]["title"],
                       first: this.calTaskTitleTime(response.data["body"][i]["unix_start_time"])
                   })
