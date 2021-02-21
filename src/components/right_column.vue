@@ -102,10 +102,11 @@ export default {
       axios.get('https://jxff6ecyn2.execute-api.ap-northeast-1.amazonaws.com/prod/getsingletask')
           .then(response => {
               for(var i = 0; i < response.data.body.length; i++){
-                  this.calPaintId(response.data["body"][i]["unix_start_time"], response.data["body"][i]["unix_end_time"]);
+                  this.calPaintId(response.data['body'][i]['unix_start_time'], response.data['body'][i]['unix_end_time']);
                   this.$store.commit('mm/addTask', {
-                      title: response.data["body"][i]["title"],
-                      first: this.calTaskTitleTime(response.data["body"][i]["unix_start_time"])
+                      title: response.data['body'][i]['title'],
+                      detail: response.data['body'][i]['detail'],
+                      first: this.calTaskTitleTime(response.data['body'][i]['unix_start_time'])
                   })
               }
           })

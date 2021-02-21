@@ -58,7 +58,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['zoom']),
+    ...mapState('sm', ['zoom']),
   },
   methods: {
     dispDayOrWeek(){

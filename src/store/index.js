@@ -12,7 +12,8 @@ const mainModule = {
     paintId: [],
     dispDays: 7,
     title: [],
-    first: []
+    detail: [],
+    first: [],
   },
   mutations: {
     changeBeginTime(state, payload) {
@@ -33,6 +34,7 @@ const mainModule = {
     },
     addTask(state, payload) {
       state.title.push(payload.title);
+      state.detail.push(payload.detail);
       state.first.push(payload.first);
     },
   },
@@ -63,12 +65,14 @@ const scaleModule = {
   state: {
     zoom: 0,
   },
-  plusClick(state) {
-    state.zoom = state.zoom + 5
-  },
-  minusClick(state) {
-    if (state.zoom > 0) {
-      state.zoom = state.zoom - 5
+  mutations: {
+    plusClick(state) {
+      state.zoom = state.zoom + 5
+    },
+    minusClick(state) {
+      if (state.zoom > 0) {
+        state.zoom = state.zoom - 5
+      }
     }
   }
 }
