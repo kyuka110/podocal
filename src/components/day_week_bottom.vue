@@ -24,7 +24,7 @@ export default {
         '--content-width': (100 / this.day_or_week) + '%'
       }
     },
-    ...mapState('mm', {
+    ...mapState('sm', {
       cssHeightHour(state) {
         return {
           'min-height': 72 + state.zoom + 'px'
