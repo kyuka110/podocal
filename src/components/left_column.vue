@@ -27,17 +27,13 @@
         </template>
       </MyModal>
     </div>
-    <button @click="openTaskDetailModal">詳細画面表示</button>
-    <MyModal class="detail_modal" @close="closeTaskDetailModal" v-if="task_detail_modal">
-      <p>たいとーる</p>
-      <p>2021-02-17 15:00:00-16:00:00</p>
-      <p>詳細ああああああああ</p>
-    </MyModal>
+    <detail_modal/>
   </div>
 </template>
 
 <script>
 import MyModal from './modal.vue'
+import detail_modal from './detail_modal'
 import {mapState} from 'vuex'
 import axios from 'axios'
 import dayjs from 'dayjs'
@@ -47,7 +43,8 @@ dayjs.extend(isSameOrAfter);
 
 export default {
   components: {
-    MyModal
+    MyModal,
+    detail_modal
   },
   name: 'left_column',
   props: {
@@ -227,11 +224,4 @@ textarea {
   padding: 0.7em 1.2em;
 }
 
-.detail_modal {
-  text-align: left;
-}
-
-.detail_modal p{
-  margin: 0.7em;
-}
 </style>
