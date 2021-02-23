@@ -11,6 +11,7 @@ const mainModule = {
     searchEndTime: 0,
     paintId: [],
     dispDays: 7,
+    taskid: [],
     title: [],
     detail: [],
     first: [],
@@ -33,6 +34,7 @@ const mainModule = {
       state.paintId.push(payload.id);
     },
     addTask(state, payload) {
+      state.taskid.push()
       state.title.push(payload.title);
       state.detail.push(payload.detail);
       state.first.push(payload.first);

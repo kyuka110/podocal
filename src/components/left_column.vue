@@ -16,8 +16,8 @@
       <button class="scale_change" v-on:click="minusClick">－</button>
     </p>
     <div class="task_add_modal">
-      <button class="task_add_button" @click="openModal">タスク追加</button>
-      <MyModal @close="closeModal" v-if="modal">
+      <button class="task_add_button" @click="openTaskAddModal">タスク追加</button>
+      <MyModal @close="closeTaskAddModal" v-if="task_add_modal">
         <input class="title" type="text" maxlength="100" placeholder="タイトル" v-model="task_title"><br>
         <label>開始日時：<input type="datetime-local" step="900" v-model="task_start_time"></label><br>
         <label>終了日時：<input type="datetime-local" step="900" v-model="task_end_time"></label><br>
@@ -27,6 +27,12 @@
         </template>
       </MyModal>
     </div>
+    <button @click="openTaskDetailModal">詳細画面表示</button>
+    <MyModal class="detail_modal" @close="closeTaskDetailModal" v-if="task_detail_modal">
+      <p>たいとーる</p>
+      <p>2021-02-17 15:00:00-16:00:00</p>
+      <p>詳細ああああああああ</p>
+    </MyModal>
   </div>
 </template>
 
@@ -49,7 +55,8 @@ export default {
   },
   data() {
     return {
-      modal: false,
+      task_add_modal: false,
+      task_detail_modal: false,
       task_title: '',
       task_detail: '',
       task_start_time: '',
@@ -70,22 +77,28 @@ export default {
     minusClick() {
       this.$store.commit('sm/minusClick')
     },
-    openModal() {
-      this.modal = true
+    openTaskAddModal() {
+      this.task_add_modal = true
     },
-    closeModal() {
-      this.modal = false
+    closeTaskAddModal() {
+      this.task_add_modal = false
+    },
+    openTaskDetailModal() {
+      this.task_detail_modal = true
+    },
+    closeTaskDetailModal() {
+      this.task_detail_modal = false
     },
     doSend() {
       if (this.task_title == '') {
         this.task_detail = ''
-        this.closeModal();
+        this.closeTaskAddModal();
         return;
       }
       if (this.task_title.trim() == '') {
         this.task_title = ''
         this.task_detail = ''
-        this.closeModal();
+        this.closeTaskAddModal();
         return;
       }
       var starttime = dayjs(this.task_start_time);
@@ -117,6 +130,7 @@ export default {
       var dateobj = dayjs.unix(time);
       return dateobj.format('YYYYMMDDHHm');
     },
+    // DBにタスク情報を登録
     setTask(starttime, endtime){
       axios.get('https://wa1mn8ww9e.execute-api.ap-northeast-1.amazonaws.com/prod/setSingleTask', {
         params: {
@@ -129,11 +143,12 @@ export default {
       this.calPaintId(starttime, endtime);
       this.$store.commit('mm/addTask', {
           title: this.task_title,
+          detail: this.task_detail,
           first: starttime
       })
       this.task_title = '';
       this.task_detail = '';
-      this.closeModal();
+      this.closeTaskAddModal();
       return;
     },
   }
@@ -199,6 +214,7 @@ button {
   padding: 0.3em;
   font-size: 1.1em;
   width: 21em;
+  text-align: left;
 }
 
 textarea {
@@ -210,7 +226,12 @@ textarea {
 .enter_task {
   padding: 0.7em 1.2em;
 }
-/*.page_change {*/
-/*  margin: 0.5em;*/
-/*}*/
+
+.detail_modal {
+  text-align: left;
+}
+
+.detail_modal p{
+  margin: 0.7em;
+}
 </style>
