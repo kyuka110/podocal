@@ -11,10 +11,9 @@ const mainModule = {
     searchEndTime: 0,
     paintId: [],
     dispDays: 7,
-    taskid: [],
-    title: [],
-    detail: [],
-    first: [],
+    title: {},
+    detail: {},
+    first: {},
   },
   mutations: {
     changeBeginTime(state, payload) {
@@ -34,10 +33,9 @@ const mainModule = {
       state.paintId.push(payload.id);
     },
     addTask(state, payload) {
-      state.taskid.push()
-      state.title.push(payload.title);
-      state.detail.push(payload.detail);
-      state.first.push(payload.first);
+      state.title[payload.taskid] = payload.title;
+      state.detail[payload.taskid] = payload.detail;
+      state.first[payload.taskid] = payload.first;
     },
   },
   actions: {
@@ -55,7 +53,10 @@ const mainModule = {
     },
     returnTitle(state){
       return state.title;
-    }
+    },
+    returnDetail(state){
+      return state.detail;
+    },
   },
   modules: {
   }
