@@ -59,9 +59,9 @@ export default {
     },
     // タスクのタイトル表示
     dispTaskTitle(checkId){
-      for(var i = 0; i< this.$store.getters['mm/returnFirst'].length; i++){
-        if (checkId == this.$store.getters['mm/returnFirst'][i]){
-          return this.$store.getters['mm/returnTitle'][i];
+      for(var key in this.$store.getters['mm/returnFirst']){
+        if (checkId == this.$store.getters['mm/returnFirst'][key]){
+          return this.$store.getters['mm/returnTitle'][key];
         }
       }
     }

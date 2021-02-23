@@ -104,6 +104,7 @@ export default {
               for(var i = 0; i < response.data.body.length; i++){
                   this.calPaintId(response.data['body'][i]['unix_start_time'], response.data['body'][i]['unix_end_time']);
                   this.$store.commit('mm/addTask', {
+                      taskid: response.data['body'][i]['id'],
                       title: response.data['body'][i]['title'],
                       detail: response.data['body'][i]['detail'],
                       first: this.calTaskTitleTime(response.data['body'][i]['unix_start_time'])
