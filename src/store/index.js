@@ -9,10 +9,14 @@ const mainModule = {
   state: {
     searchBeginTime:  4765100399000, //2120-12-31 23:59:59
     searchEndTime: 0,
-    paintId: [],
     dispDays: 7,
-    title: [],
-    first: []
+    detailTaskId: 0,
+    taskDetailModal: false,
+    // dictはタスクのidがkey, 塗る場所のidがvalueで入る。paintIdのみ逆。
+    paintId: {},
+    title: {},
+    detail: {},
+    first: {},
   },
   mutations: {
     changeBeginTime(state, payload) {
@@ -29,12 +33,19 @@ const mainModule = {
       state.dispDays = payload.days;
     },
     addPaintId(state, payload) {
-      state.paintId.push(payload.id);
+      state.paintId[payload.id] = payload.taskId;
     },
     addTask(state, payload) {
-      state.title.push(payload.title);
-      state.first.push(payload.first);
+      state.title[payload.taskid] = payload.title;
+      state.detail[payload.taskid] = payload.detail;
+      state.first[payload.taskid] = payload.first;
     },
+    isDispDetailModal(state, payload) {
+      state.taskDetailModal = payload.isOpen;
+    },
+    changeDetailTaskId(state, payload) {
+      state.detailTaskId = payload.detailTaskId;
+    }
   },
   actions: {
 
@@ -51,7 +62,16 @@ const mainModule = {
     },
     returnTitle(state){
       return state.title;
-    }
+    },
+    returnDetail(state){
+      return state.detail;
+    },
+    returnTaskDetailModal(state){
+      return state.taskDetailModal;
+    },
+    returnDetailTaskId(state){
+      return state.detailTaskId;
+    },
   },
   modules: {
   }
@@ -63,12 +83,14 @@ const scaleModule = {
   state: {
     zoom: 0,
   },
-  plusClick(state) {
-    state.zoom = state.zoom + 5
-  },
-  minusClick(state) {
-    if (state.zoom > 0) {
-      state.zoom = state.zoom - 5
+  mutations: {
+    plusClick(state) {
+      state.zoom = state.zoom + 5
+    },
+    minusClick(state) {
+      if (state.zoom > 0) {
+        state.zoom = state.zoom - 5
+      }
     }
   }
 }

@@ -16,8 +16,8 @@
       <button class="scale_change" v-on:click="minusClick">－</button>
     </p>
     <div class="task_add_modal">
-      <button class="task_add_button" @click="openModal">タスク追加</button>
-      <MyModal @close="closeModal" v-if="modal">
+      <button class="task_add_button" @click="openTaskAddModal">タスク追加</button>
+      <MyModal @close="closeTaskAddModal" v-if="task_add_modal">
         <input class="title" type="text" maxlength="100" placeholder="タイトル" v-model="task_title"><br>
         <label>開始日時：<input type="datetime-local" step="900" v-model="task_start_time"></label><br>
         <label>終了日時：<input type="datetime-local" step="900" v-model="task_end_time"></label><br>
@@ -41,7 +41,7 @@ dayjs.extend(isSameOrAfter);
 
 export default {
   components: {
-    MyModal
+    MyModal,
   },
   name: 'left_column',
   props: {
@@ -49,7 +49,8 @@ export default {
   },
   data() {
     return {
-      modal: false,
+      task_add_modal: false,
+      task_detail_modal: false,
       task_title: '',
       task_detail: '',
       task_start_time: '',
@@ -58,7 +59,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['zoom']),
+    ...mapState('sm', ['zoom']),
   },
   methods: {
     dispDayOrWeek(){
@@ -70,22 +71,28 @@ export default {
     minusClick() {
       this.$store.commit('sm/minusClick')
     },
-    openModal() {
-      this.modal = true
+    openTaskAddModal() {
+      this.task_add_modal = true
     },
-    closeModal() {
-      this.modal = false
+    closeTaskAddModal() {
+      this.task_add_modal = false
+    },
+    openTaskDetailModal() {
+      this.task_detail_modal = true
+    },
+    closeTaskDetailModal() {
+      this.task_detail_modal = false
     },
     doSend() {
       if (this.task_title == '') {
         this.task_detail = ''
-        this.closeModal();
+        this.closeTaskAddModal();
         return;
       }
       if (this.task_title.trim() == '') {
         this.task_title = ''
         this.task_detail = ''
-        this.closeModal();
+        this.closeTaskAddModal();
         return;
       }
       var starttime = dayjs(this.task_start_time);
@@ -96,11 +103,14 @@ export default {
       }
       this.setTask(starttime, endtime);
     },
-    add (value){
-        this.$store.commit('mm/addPaintId', {id:value})
+    add (value, taskId){
+      this.$store.commit('mm/addPaintId', {
+        id:value,
+        taskId:taskId
+      })
     },
     // タスクがある場所として塗るところを計算
-    calPaintId(starttime, endtime) {
+    calPaintId(starttime, endtime, taskId) {
       var i = 0;
       var startTime = dayjs.unix(starttime);
       var endTime = dayjs.unix(endtime);
@@ -109,14 +119,15 @@ export default {
         if (endTime.isSameOrBefore(paintTime)){
           break;
         }
-        this.add(paintTime.format('YYYYMMDDHHm'));
+        this.add(paintTime.format('YYYYMMDDHHmm'), taskId);
         i++;
       }
     },
     calTaskTitleTime(time){
       var dateobj = dayjs.unix(time);
-      return dateobj.format('YYYYMMDDHHm');
+      return dateobj.format('YYYYMMDDHHmm');
     },
+    // DBにタスク情報を登録
     setTask(starttime, endtime){
       axios.get('https://wa1mn8ww9e.execute-api.ap-northeast-1.amazonaws.com/prod/setSingleTask', {
         params: {
@@ -126,14 +137,17 @@ export default {
           detail: this.task_detail
         }
       });
-      this.calPaintId(starttime, endtime);
+      var v_arr = Object.values(this.$store.getters['mm/returnPaintId']);
+      var lastId = v_arr.pop();
+      this.calPaintId(starttime, endtime, lastId + 1);
       this.$store.commit('mm/addTask', {
           title: this.task_title,
+          detail: this.task_detail,
           first: starttime
       })
       this.task_title = '';
       this.task_detail = '';
-      this.closeModal();
+      this.closeTaskAddModal();
       return;
     },
   }
@@ -199,6 +213,7 @@ button {
   padding: 0.3em;
   font-size: 1.1em;
   width: 21em;
+  text-align: left;
 }
 
 textarea {
@@ -210,7 +225,5 @@ textarea {
 .enter_task {
   padding: 0.7em 1.2em;
 }
-/*.page_change {*/
-/*  margin: 0.5em;*/
-/*}*/
+
 </style>

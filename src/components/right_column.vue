@@ -12,7 +12,6 @@
 <script>
 import day_week_top from './day_week_top.vue'
 import day_week_bottom from './day_week_bottom.vue'
-import axios from "axios"
 import {mapGetters} from "vuex";
 import dayjs from "dayjs";
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
@@ -75,11 +74,14 @@ export default {
          }
          return dayStr;
      },
-      add (value){
-          this.$store.commit('mm/addPaintId', {id:value})
+      add (value, taskId){
+          this.$store.commit('mm/addPaintId', {
+            id:value,
+            taskId:taskId
+          })
       },
       // タスクがある場所として塗るところを計算
-      calPaintId(starttime, endtime) {
+      calPaintId(starttime, endtime, taskId) {
           var i = 0;
           var startTime = dayjs.unix(starttime);
           var endTime = dayjs.unix(endtime);
@@ -88,30 +90,14 @@ export default {
             if (endTime.isSameOrBefore(paintTime)){
               break;
             }
-            this.add(paintTime.format('YYYYMMDDHHm'));
+            this.add(paintTime.format('YYYYMMDDHHmm'), taskId);
             i++;
           }
       },
       calTaskTitleTime(time){
           var dateobj = dayjs.unix(time);
-          return dateobj.format('YYYYMMDDHHm');
+          return dateobj.format('YYYYMMDDHHmm');
       }
-  },
-  created() {
-      // タスク取得
-      axios.get('https://jxff6ecyn2.execute-api.ap-northeast-1.amazonaws.com/prod/getsingletask')
-          .then(response => {
-              for(var i = 0; i < response.data.body.length; i++){
-                  this.calPaintId(response.data["body"][i]["unix_start_time"], response.data["body"][i]["unix_end_time"]);
-                  this.$store.commit('mm/addTask', {
-                      title: response.data["body"][i]["title"],
-                      first: this.calTaskTitleTime(response.data["body"][i]["unix_start_time"])
-                  })
-              }
-          })
-          .catch((reason) => {
-              console.log(reason.message)
-          })
   }
 }
 </script>
