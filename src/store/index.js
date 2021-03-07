@@ -9,8 +9,11 @@ const mainModule = {
   state: {
     searchBeginTime:  4765100399000, //2120-12-31 23:59:59
     searchEndTime: 0,
-    paintId: [],
     dispDays: 7,
+    detailTaskId: 0,
+    taskDetailModal: false,
+    // dictはタスクのidがkey, 塗る場所のidがvalueで入る。paintIdのみ逆。
+    paintId: {},
     title: {},
     detail: {},
     first: {},
@@ -30,13 +33,19 @@ const mainModule = {
       state.dispDays = payload.days;
     },
     addPaintId(state, payload) {
-      state.paintId.push(payload.id);
+      state.paintId[payload.id] = payload.taskId;
     },
     addTask(state, payload) {
       state.title[payload.taskid] = payload.title;
       state.detail[payload.taskid] = payload.detail;
       state.first[payload.taskid] = payload.first;
     },
+    isDispDetailModal(state, payload) {
+      state.taskDetailModal = payload.isOpen;
+    },
+    changeDetailTaskId(state, payload) {
+      state.detailTaskId = payload.detailTaskId;
+    }
   },
   actions: {
 
@@ -56,6 +65,12 @@ const mainModule = {
     },
     returnDetail(state){
       return state.detail;
+    },
+    returnTaskDetailModal(state){
+      return state.taskDetailModal;
+    },
+    returnDetailTaskId(state){
+      return state.detailTaskId;
     },
   },
   modules: {
