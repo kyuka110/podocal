@@ -1,16 +1,15 @@
 <template>
-  <div>
-    <button @click="openTaskDetailModal">詳細画面表示</button>
-    <MyModal class="detail_modal" @close="closeTaskDetailModal" v-if="task_detail_modal">
-      <p>{{dispTaskTitle(6)}}</p>
-      <p>{{dispTaskBeginDate(6)}}</p>
-      <p>{{dispTaskDetail(4)}}</p>
-    </MyModal>
-  </div>
+  <MyModal class="detail_modal" @close="closeTaskDetailModal">
+    <p>{{dispTaskTitle(detailTaskId)}}</p>
+    <p>{{dispTaskBeginDate(detailTaskId)}} - {{dispTaskEndDate(detailTaskId)}}</p>
+    <p>{{dispTaskDetail(detailTaskId)}}</p>
+  </MyModal>
 </template>
 
 <script>
 import MyModal from './modal.vue'
+import {mapState} from "vuex";
+import dayjs from 'dayjs'
 export default {
   components: {
     MyModal
@@ -18,35 +17,34 @@ export default {
   name: 'detail_modal',
   props: {
   },
-  data() {
-    return {
-      task_detail_modal: false,
-    }
-  },
   computed: {
+    ...mapState('mm', ['detailTaskId']),
   },
   methods: {
-    openTaskDetailModal() {
-      this.task_detail_modal = true
-    },
     closeTaskDetailModal() {
-      this.task_detail_modal = false
+      this.$store.commit('mm/isDispDetailModal', {isOpen: false})
     },
     // タスクのタイトル表示
-    dispTaskTitle(checkId){
-        return this.$store.getters['mm/returnTitle'][checkId];
+    dispTaskTitle(taskid){
+        return this.$store.getters['mm/returnTitle'][taskid];
     },
     // タスクの開始時間表示
-    dispTaskBeginDate(checkId){
-      return this.$store.getters['mm/returnFirst'][checkId];
+    dispTaskBeginDate(taskid){
+      var beginTimeId = this.$store.getters['mm/returnFirst'][taskid];
+      var beginTime = dayjs(beginTimeId).format('YYYY/MM/DD HH:') + beginTimeId.slice(-2)
+      return beginTime
     },
     // タスクの終了時間表示
-    // dispTaskEndDate(checkId){
-    //   return this.$store.getters['mm/returnTitle'][checkId];
-    // },
+    dispTaskEndDate(taskid){
+      var endTimeId = Object.keys(this.$store.getters['mm/returnPaintId']).reduce( (r, key) => {
+        return this.$store.getters['mm/returnPaintId'][key] === taskid ? key : r
+      }, null);
+      var endTime = dayjs(endTimeId).format('YYYY/MM/DD HH:') + endTimeId.slice(-2)
+      return endTime
+    },
     // タスクの詳細表示
-    dispTaskDetail(checkId){
-      return this.$store.getters['mm/returnDetail'][checkId];
+    dispTaskDetail(taskid){
+      return this.$store.getters['mm/returnDetail'][taskid];
     },
   }
 }
