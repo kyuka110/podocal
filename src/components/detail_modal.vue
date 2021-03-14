@@ -9,8 +9,8 @@
     <input type="text" id="taskEnd" name="taskEnd" v-if="isEdit" :value="dispTaskEndDate(detailTaskId)" class="inputBox">
     <p v-if="!isEdit">{{dispTaskDetail(detailTaskId)}}</p>
     <textarea id="taskDetail" name="taskDetail" v-if="isEdit" :value="dispTaskDetail(detailTaskId)" class="inputBox"></textarea>
-    <button type="button" v-if="isEdit" :disabled="noChange">更新</button>
-    <button type="button" v-if="isEdit" @click="cancel">キャンセル</button>
+    <button type="button" v-if="isEdit" @click="update()" :disabled="noChange">更新</button>
+    <button type="button" v-if="isEdit" @click="cancel()">キャンセル</button>
     </form>
   </MyModal>
 </template>
@@ -67,6 +67,12 @@ export default {
     edit(){
       this.isEdit = true;
     },
+    // 入力情報をもとに更新
+    update(){
+      // api叩く
+      // 各種stateの情報を更新する
+      return
+    },
     cancel() {
       this.isEdit = false;
     }
@@ -96,4 +102,32 @@ span{
   width: 100%
 }
 
+input[type=text]{
+  font-size: 1.2em;
+  padding: 3px;
+  margin-bottom: 25px;
+}
+
+.inputBox {
+  font-size: 1.2em;
+}
+
+textarea {
+  height: calc( 1em * 10 );
+  line-height: 1em;
+  padding: 4px;
+}
+
+button {
+  background-color: #2c3e50;
+  color: white;
+  border: none;
+  outline: none;
+  font-size: 1.2em;
+  margin: 0.5em;
+  padding:0.5em;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
 </style>
