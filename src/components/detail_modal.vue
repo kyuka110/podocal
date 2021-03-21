@@ -7,12 +7,12 @@
     <input type="text" id="taskTitle" name="taskTitle" v-if="isEdit" v-model="task_title" class="inputBox">
     <p v-if="!isEdit">{{dispTaskBeginDate(detailTaskId)}} - {{dispTaskEndDate(detailTaskId)}}</p>
     <vue-ctk-date-time-picker
-        v-if="isEdit" label="開始時刻" :noClearButton="true"
+        v-if="isEdit" id="begin" label="開始時刻" :noClearButton="true"
         v-model="task_start_time" :minute-interval="15"
         :overray="true" :format="'YYYY-MM-DD HH:mm'">
     </vue-ctk-date-time-picker>
     <vue-ctk-date-time-picker
-        v-if="isEdit" label="終了時刻" :noClearButton="true"
+        v-if="isEdit" id="end" label="終了時刻" :noClearButton="true"
         v-model="task_end_time" :minute-interval="15"
         :overray="true" :format="'YYYY-MM-DD HH:mm'">
     </vue-ctk-date-time-picker>
@@ -77,7 +77,7 @@ export default {
       var endTimeId = Object.keys(this.$store.getters['mm/returnPaintId']).reduce( (r, key) => {
         return this.$store.getters['mm/returnPaintId'][key] === taskid ? key : r
       }, null);
-      var endTime = dayjs(endTimeId).format('YYYY/MM/DD HH:') + endTimeId.slice(-2)
+      var endTime = dayjs(endTimeId).format('YYYY/MM/DD HH:') + String(Number(endTimeId.slice(-2)) + 15)
       return endTime
     },
     // 終了時間表示datatime-localの初期値用
@@ -85,7 +85,7 @@ export default {
       var endTimeId = Object.keys(this.$store.getters['mm/returnPaintId']).reduce( (r, key) => {
         return this.$store.getters['mm/returnPaintId'][key] === taskid ? key : r
       }, null);
-      var endTime = dayjs(endTimeId).format('YYYY-MM-DDTHH:') + endTimeId.slice(-2) + ':00'
+      var endTime = dayjs(endTimeId).format('YYYY-MM-DDTHH:') + String(Number(endTimeId.slice(-2)) + 15) + ':00'
       return endTime
     },
     // タスクの詳細表示
@@ -110,8 +110,13 @@ export default {
           detail: this.task_detail
         }
       });
-      // console.log(this.task_title)
-      // 各種stateの情報を更新する
+      this.$store.commit('mm/addTask', {
+        taskid: this.detailTaskId,
+        title: this.task_title,
+        detail: this.task_detail,
+        first: dayjs(this.task_start_time)
+      })
+      alert('更新しました')
       return
     },
     cancel() {
