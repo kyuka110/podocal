@@ -2,13 +2,22 @@
   <MyModal class="detail_modal" @close="closeTaskDetailModal">
     <form>
     <span v-if="!isEdit" @click="edit()"><font-awesome-icon icon="edit" class="fa-lg"/></span>
+    <span v-if="!isEdit"><font-awesome-icon icon="trash-alt" class="fa-lg"/></span>
     <p v-if="!isEdit">{{dispTaskTitle(detailTaskId)}}</p>
-    <input type="text" id="taskTitle" name="taskTitle" v-if="isEdit" :value="dispTaskTitle(detailTaskId)" class="inputBox">
+    <input type="text" id="taskTitle" name="taskTitle" v-if="isEdit" v-model="task_title" class="inputBox">
     <p v-if="!isEdit">{{dispTaskBeginDate(detailTaskId)}} - {{dispTaskEndDate(detailTaskId)}}</p>
-    <input type="text" id="taskBegin" name="taskBegin" v-if="isEdit" :value="dispTaskBeginDate(detailTaskId)" class="inputBox">
-    <input type="text" id="taskEnd" name="taskEnd" v-if="isEdit" :value="dispTaskEndDate(detailTaskId)" class="inputBox">
+    <vue-ctk-date-time-picker
+        v-if="isEdit" label="開始時刻" :noClearButton="true"
+        v-model="task_start_time" :minute-interval="15"
+        :overray="true" :format="'YYYY-MM-DD HH:mm'">
+    </vue-ctk-date-time-picker>
+    <vue-ctk-date-time-picker
+        v-if="isEdit" label="終了時刻" :noClearButton="true"
+        v-model="task_end_time" :minute-interval="15"
+        :overray="true" :format="'YYYY-MM-DD HH:mm'">
+    </vue-ctk-date-time-picker>
     <p v-if="!isEdit">{{dispTaskDetail(detailTaskId)}}</p>
-    <textarea id="taskDetail" name="taskDetail" v-if="isEdit" :value="dispTaskDetail(detailTaskId)" class="inputBox"></textarea>
+    <textarea id="taskDetail" name="taskDetail" v-if="isEdit" v-model="task_detail" class="inputBox"></textarea>
     <button type="button" v-if="isEdit" @click="update()" :disabled="noChange">更新</button>
     <button type="button" v-if="isEdit" @click="cancel()">キャンセル</button>
     </form>
@@ -19,6 +28,7 @@
 import MyModal from './modal.vue'
 import {mapState} from "vuex";
 import dayjs from 'dayjs'
+import axios from "axios";
 export default {
   components: {
     MyModal
@@ -29,6 +39,10 @@ export default {
   data () {
     return {
       isEdit: false,
+      task_title: '',
+      task_detail: '',
+      task_start_time: '',
+      task_end_time: '',
     }
   },
   computed: {
@@ -52,6 +66,12 @@ export default {
       var beginTime = dayjs(beginTimeId).format('YYYY/MM/DD HH:') + beginTimeId.slice(-2)
       return beginTime
     },
+    // 開始時間表示datatime-localの初期値用
+    dataTimeLocalBegin(taskid){
+      var beginTimeId = this.$store.getters['mm/returnFirst'][taskid];
+      var beginTime = dayjs(beginTimeId).format('YYYY-MM-DDTHH:') + beginTimeId.slice(-2) + ':00'
+      return beginTime
+    },
     // タスクの終了時間表示
     dispTaskEndDate(taskid){
       var endTimeId = Object.keys(this.$store.getters['mm/returnPaintId']).reduce( (r, key) => {
@@ -60,16 +80,37 @@ export default {
       var endTime = dayjs(endTimeId).format('YYYY/MM/DD HH:') + endTimeId.slice(-2)
       return endTime
     },
+    // 終了時間表示datatime-localの初期値用
+    dataTimeLocalEnd(taskid){
+      var endTimeId = Object.keys(this.$store.getters['mm/returnPaintId']).reduce( (r, key) => {
+        return this.$store.getters['mm/returnPaintId'][key] === taskid ? key : r
+      }, null);
+      var endTime = dayjs(endTimeId).format('YYYY-MM-DDTHH:') + endTimeId.slice(-2) + ':00'
+      return endTime
+    },
     // タスクの詳細表示
     dispTaskDetail(taskid){
       return this.$store.getters['mm/returnDetail'][taskid];
     },
     edit(){
       this.isEdit = true;
+      this.task_title = this.dispTaskTitle(this.detailTaskId),
+      this.task_detail = this.dispTaskDetail(this.detailTaskId),
+      this.task_start_time = this.dataTimeLocalBegin(this.detailTaskId),
+      this.task_end_time = this.dataTimeLocalEnd(this.detailTaskId)
     },
     // 入力情報をもとに更新
     update(){
-      // api叩く
+      axios.get('https://ntny99vg0e.execute-api.ap-northeast-1.amazonaws.com/prod/updateSingleTask', {
+        params: {
+          id: this.detailTaskId,
+          title: this.task_title,
+          unix_start_time: dayjs(this.task_start_time).unix(),
+          unix_end_time: dayjs(this.task_end_time).unix(),
+          detail: this.task_detail
+        }
+      });
+      // console.log(this.task_title)
       // 各種stateの情報を更新する
       return
     },
@@ -88,6 +129,7 @@ export default {
 
 span{
   float: right;
+  margin: 0 0.5em;
 }
 
 .detail_modal p{
@@ -113,9 +155,11 @@ input[type=text]{
 }
 
 textarea {
-  height: calc( 1em * 10 );
+  height: calc( 1em * 20 );
   line-height: 1em;
+  margin-top: 25px;
   padding: 4px;
+
 }
 
 button {
@@ -124,7 +168,7 @@ button {
   border: none;
   outline: none;
   font-size: 1.2em;
-  margin: 0.5em;
+  margin: 0.5em 0.5em 1em 0.5em;
   padding:0.5em;
   -webkit-appearance: none;
   -moz-appearance: none;
