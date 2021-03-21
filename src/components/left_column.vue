@@ -141,6 +141,7 @@ export default {
       var lastId = v_arr.pop();
       this.calPaintId(starttime, endtime, lastId + 1);
       this.$store.commit('mm/addTask', {
+          taskid: lastId + 1,
           title: this.task_title,
           detail: this.task_detail,
           first: starttime
