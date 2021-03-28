@@ -2,7 +2,7 @@
   <MyModal class="detail_modal" @close="closeTaskDetailModal">
     <form>
     <span v-if="!isEdit" @click="edit()"><font-awesome-icon icon="edit" class="fa-lg"/></span>
-    <span v-if="!isEdit"><font-awesome-icon icon="trash-alt" class="fa-lg"/></span>
+    <span v-if="!isEdit" @click="deleteDialog()"><font-awesome-icon icon="trash-alt" class="fa-lg"/></span>
     <p v-if="!isEdit">{{dispTaskTitle(detailTaskId)}}</p>
     <input type="text" id="taskTitle" name="taskTitle" v-if="isEdit" v-model="task_title" class="inputBox">
     <p v-if="!isEdit">{{dispTaskBeginDate(detailTaskId)}} - {{dispTaskEndDate(detailTaskId)}}</p>
@@ -118,6 +118,19 @@ export default {
       })
       alert('更新しました')
       return
+    },
+    deleteDialog() {
+      var message = 'タスクを削除しますか？';
+      if(confirm(message)) {
+        axios.get('https://8t8wx1972d.execute-api.ap-northeast-1.amazonaws.com/prod/deleteSingleTask', {
+          params: {
+            id: this.detailTaskId
+          }
+        });
+        this.$store.commit('mm/deleteTask', {
+          taskid: this.detailTaskId,
+        })
+      }
     },
     cancel() {
       this.isEdit = false;
