@@ -40,6 +40,16 @@ const mainModule = {
       state.detail[payload.taskid] = payload.detail;
       state.first[payload.taskid] = payload.first;
     },
+    deleteTask(state, payload) {
+      delete state.title[payload.taskid];
+      delete state.detail[payload.taskid];
+      delete state.first[payload.taskid];
+      for(var key of Object.keys(state.paintId)){
+        if(state.paintId[key] == payload.taskid){
+          delete state.paintId[key]
+        }
+      }
+    },
     isDispDetailModal(state, payload) {
       state.taskDetailModal = payload.isOpen;
     },
